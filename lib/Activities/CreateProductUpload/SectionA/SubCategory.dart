@@ -78,7 +78,7 @@ class _SubCategoryState extends State<SubCategory> {
                             onTap: () => {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => MWCollection(stockType, HUID, ptype, collection, col, cat)),
+                                MaterialPageRoute(builder: (context) => MWCollection(stockType, HUID, ptype, collection, col, cat,collectionTypeList[index].sCatId.toString())),
                               ),
                             },
                             child: Card(

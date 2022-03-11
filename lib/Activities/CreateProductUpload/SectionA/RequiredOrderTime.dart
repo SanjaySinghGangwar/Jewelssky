@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jewelssky/Activities/LoginScreen.dart';
 import 'package:jewelssky/HttpService/APIService.dart';
-import 'package:jewelssky/Model/MWCollection/MWCollectionRequest.dart';
+import 'package:jewelssky/Model/RequiredOrderTime/RequiredOrderTime.dart';
 import 'package:jewelssky/Model/SaveDesignSetFirst/SaveDesignSetFirstRequest.dart';
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,12 +14,15 @@ class RequiredOrderTime extends StatefulWidget {
   String HUID = "";
   String ptype = "";
   String stockType = "";
+  String scat = "";
   String mwCollection = "";
+  String cultNm = "";
+  String cultId = "";
 
-  RequiredOrderTime(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, {Key? key}) : super(key: key);
+  RequiredOrderTime(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, {Key? key}) : super(key: key);
 
   @override
-  _RequiredOrderTimeState createState() => _RequiredOrderTimeState(stockType, HUID, ptype, collection, col, cat, mwCollection);
+  _RequiredOrderTimeState createState() => _RequiredOrderTimeState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId);
 }
 
 class _RequiredOrderTimeState extends State<RequiredOrderTime> {
@@ -33,16 +36,20 @@ class _RequiredOrderTimeState extends State<RequiredOrderTime> {
   String col = "";
   String cat = "";
   String mwCollection = "";
+  String scat = "";
+  String cultNm = "";
+  String cultId = "";
 
-  List<String> list = ["1 Week", "2 Week", "3 Week", "4 Week"];
+  List<RequiredOrderTimeModel> list = [];
 
   SharedPreferences? preferences;
 
-  _RequiredOrderTimeState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection);
+  _RequiredOrderTimeState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId);
 
   @override
   void initState() {
     super.initState();
+    addDataToList();
     initializePreference().whenComplete(() {
       setState(() {
         islogin = preferences!.getBool(mSharedPreference().isLogin)!;
@@ -77,11 +84,11 @@ class _RequiredOrderTimeState extends State<RequiredOrderTime> {
                       scrollDirection: Axis.vertical,
                       itemCount: list.length,
                       itemBuilder: (context, index) => InkWell(
-                        onTap: () => {},
+                        onTap: () => {hitApi(list[index].value!)},
                         child: Card(
                             child: Padding(
                           padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-                          child: Text(list[index]),
+                          child: Text(list[index].name!),
                         )),
                       ),
                     ),
@@ -124,24 +131,31 @@ class _RequiredOrderTimeState extends State<RequiredOrderTime> {
   Future<void> initializePreference() async {
     preferences = await SharedPreferences.getInstance();
   }
-  void hitApi(String userID) {
+
+  void hitApi(String orderTime) {
     setState(() {
       isLoading = true;
     });
 
-    SaveDesignSetFirstRequest requestModel = SaveDesignSetFirstRequest(userId: preferences!.getString(mSharedPreference().userID)!,ptype: ptype,coll: col,cat: cat,scat: "",cultId: "",cultNm: "",occi: "",occiNm: "",stype: "",exday: "",orderTime: "",huid: HUID );
-    apiService.saveDesignSetFirst(requestModel)
+    SaveDesignSetFirstRequest requestModel = SaveDesignSetFirstRequest(userId: preferences!.getString(mSharedPreference().userID)!, ptype: ptype, coll: col, cat: cat, scat: scat, cultId: cultId, cultNm: cultNm, occi: "0", occiNm: "0", stype: stockType, exday: orderTime, orderTime: "", huid: HUID);
+    apiService
+        .saveDesignSetFirst(requestModel)
         .then((value) => {
-      if (value.messageId == 1)
-        {
-          setState(() {
-
-            isLoading = false;
-          })
-        }
-    })
+              if (value.messageId == 1)
+                {
+                  setState(() {
+                    preferences!.setString(mSharedPreference().design, value.design!);
+                    isLoading = false;
+                  })
+                }
+            })
         .onError((error, stackTrace) => {});
   }
 
+  void addDataToList() {
+    list.add(RequiredOrderTimeModel(name: "1 Week", value: "7"));
+    list.add(RequiredOrderTimeModel(name: "2 Week", value: "14"));
+    list.add(RequiredOrderTimeModel(name: "3 Week", value: "21"));
+    list.add(RequiredOrderTimeModel(name: "4 Week", value: "28"));
+  }
 }
-

@@ -15,11 +15,12 @@ class MWCollection extends StatefulWidget {
   String HUID = "";
   String ptype = "";
   String stockType = "";
+  String scat = "";
 
-  MWCollection(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, {Key? key}) : super(key: key);
+  MWCollection(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat,this.scat, {Key? key}) : super(key: key);
 
   @override
-  _MWCollectionState createState() => _MWCollectionState(stockType, HUID, ptype, collection, col, cat);
+  _MWCollectionState createState() => _MWCollectionState(stockType, HUID, ptype, collection, col, cat,scat);
 }
 
 class _MWCollectionState extends State<MWCollection> {
@@ -29,6 +30,7 @@ class _MWCollectionState extends State<MWCollection> {
   String stockType = "";
   String col = "";
   String cat = "";
+  String scat = "";
   String flag = "";
   var isLoading = true;
 
@@ -36,7 +38,7 @@ class _MWCollectionState extends State<MWCollection> {
   SharedPreferences? preferences;
   List<Data> collectionTypeList = [];
 
-  _MWCollectionState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat);
+  _MWCollectionState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat,this.scat);
 
   @override
   void initState() {
@@ -80,7 +82,7 @@ class _MWCollectionState extends State<MWCollection> {
                             onTap: () => {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => RequiredOrderTime(stockType, HUID, ptype, collection, col, cat,collectionTypeList[index].collType!)),
+                                MaterialPageRoute(builder: (context) => RequiredOrderTime(stockType, HUID, ptype, collection, col, cat,collectionTypeList[index].collType!,scat,collectionTypeList[index].collType!,collectionTypeList[index].id!.toString())),
                               ),
                             },
                             child: Card(

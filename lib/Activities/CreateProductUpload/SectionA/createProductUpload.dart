@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jewelssky/Activities/CreateProductUpload/SectionA/ProductType.dart';
 import 'package:jewelssky/Activities/LoginScreen.dart';
+import 'package:jewelssky/Model/StockType/StockType.dart';
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +17,7 @@ class CreateProductUpload extends StatefulWidget {
 class _CreateProductUploadState extends State<CreateProductUpload> {
   var islogin = false;
 
-  List<String> list = ["Ready Stock", "Order Stock"];
+  List<StockType> list = [];
 
   SharedPreferences? preferences;
   TextEditingController HUID = TextEditingController();
@@ -24,6 +25,7 @@ class _CreateProductUploadState extends State<CreateProductUpload> {
   @override
   void initState() {
     super.initState();
+    addDataToList();
     initializePreference().whenComplete(() {
       setState(() {
         islogin = preferences!.getBool(mSharedPreference().isLogin)!;
@@ -194,24 +196,24 @@ class _CreateProductUploadState extends State<CreateProductUpload> {
     }
   }
 
-  Widget _horizontalListView(List<String> mList) {
+  Widget _horizontalListView(List<StockType> mList) {
     return SizedBox(
       height: 100,
       width: 230,
-      child: ListView.builder(
+      child: AnimatedList(
         scrollDirection: Axis.vertical,
-        itemCount: mList.length,
-        itemBuilder: (context, index) => InkWell(
+        initialItemCount: mList.length,
+        itemBuilder: (context, index, animation) => InkWell(
           onTap: () => {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => productType(mList[index],HUID.text)),
+              MaterialPageRoute(builder: (context) => productType(list[index].value! , HUID.text)),
             ),
           },
           child: Card(
               child: Padding(
             padding: const EdgeInsets.all(12.0),
-            child: Text(mList[index]),
+            child: Text(mList[index].name!),
           )),
         ),
       ),
@@ -220,5 +222,10 @@ class _CreateProductUploadState extends State<CreateProductUpload> {
 
   Future<void> initializePreference() async {
     this.preferences = await SharedPreferences.getInstance();
+  }
+
+  void addDataToList() {
+    list.add(StockType(name: "Ready Stock", value: "Actual"));
+    list.add(StockType(name: "Order Stock", value: "Virtual"));
   }
 }

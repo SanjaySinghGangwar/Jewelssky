@@ -12,12 +12,10 @@ class productType extends StatefulWidget {
   String stockType = "";
   String HUID = "";
 
-  productType(String mList, this.HUID, {Key? key}) : super(key: key) {
-    stockType = mList;
-  }
+  productType(this.stockType, this.HUID, {Key? key}) : super(key: key);
 
   @override
-  _productTypeState createState() => _productTypeState(stockType,HUID);
+  _productTypeState createState() => _productTypeState(stockType, HUID);
 }
 
 class _productTypeState extends State<productType> {
@@ -75,7 +73,7 @@ class _productTypeState extends State<productType> {
                               print("YES" + productTypeList[index].proId.toString()),
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => SelectCollection(stockType,huid,productTypeList[index].proId.toString())),
+                                MaterialPageRoute(builder: (context) => SelectCollection(stockType, huid, productTypeList[index].proId.toString())),
                               ),
                             },
                             child: Card(

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jewelssky/Activities/CreateProductUpload/SectionB/Purity.dart';
 import 'package:jewelssky/Activities/LoginScreen.dart';
 import 'package:jewelssky/HttpService/APIService.dart';
 import 'package:jewelssky/Model/RequiredOrderTime/RequiredOrderTime.dart';
@@ -113,10 +114,10 @@ class _RequiredOrderTimeState extends State<RequiredOrderTime> {
         itemCount: mList.length,
         itemBuilder: (context, index) => InkWell(
           onTap: () => {
-            /* Navigator.push(
+            Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => productType(mList[index])),
-            ),*/
+              MaterialPageRoute(builder: (context) => Purity(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+            ),
           },
           child: Card(
               child: Padding(
@@ -145,7 +146,11 @@ class _RequiredOrderTimeState extends State<RequiredOrderTime> {
                 {
                   setState(() {
                     preferences!.setString(mSharedPreference().design, value.design!);
-                    isLoading = false;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Purity(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                    );
+                    //isLoading = false;
                   })
                 }
             })

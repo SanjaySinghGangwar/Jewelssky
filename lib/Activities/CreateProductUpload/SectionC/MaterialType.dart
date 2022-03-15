@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:jewelssky/Activities/CreateProductUpload/SectionC/MaterialType.dart';
+import 'package:jewelssky/Activities/CreateProductUpload/SectionC/Shape.dart';
 import 'package:jewelssky/Common/Loader.dart';
 import 'package:jewelssky/HttpService/APIService.dart';
-import 'package:jewelssky/Model/MFGType/MFGTypeResponse.dart';
-import 'package:jewelssky/Utils/mUtils.dart';
+import 'package:jewelssky/Model/MaterialType/MaterialTypeRequest.dart';
+import 'package:jewelssky/Model/MaterialType/MaterialTypeResponse.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MFGType extends StatefulWidget {
+class MaterialTypeA extends StatefulWidget {
   String col = "";
   String cat = "";
   String collection = "";
@@ -19,13 +18,13 @@ class MFGType extends StatefulWidget {
   String cultNm = "";
   String cultId = "";
 
-  MFGType(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, {Key? key}) : super(key: key);
+  MaterialTypeA(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, {Key? key}) : super(key: key);
 
   @override
-  _MFGTypeState createState() => _MFGTypeState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId);
+  _MaterialTypeAState createState() => _MaterialTypeAState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId);
 }
 
-class _MFGTypeState extends State<MFGType> {
+class _MaterialTypeAState extends State<MaterialTypeA> {
   var isLoading = false;
   var islogin = false;
   APIService apiService = APIService();
@@ -44,7 +43,7 @@ class _MFGTypeState extends State<MFGType> {
 
   SharedPreferences? preferences;
 
-  _MFGTypeState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId);
+  _MaterialTypeAState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId);
 
   @override
   void initState() {
@@ -75,7 +74,7 @@ class _MFGTypeState extends State<MFGType> {
                         height: 20,
                       ),
                       const Text(
-                        "MFG Type",
+                        "Material Type",
                         style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                       ),
                       Expanded(
@@ -86,7 +85,7 @@ class _MFGTypeState extends State<MFGType> {
                             onTap: () => {
                               Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => MaterialTypeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                          MaterialPageRoute(builder: (context) => Shape(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,collectionTypeList[index].materialId.toString())),
                         ),
                             },
                             child: Card(
@@ -96,7 +95,7 @@ class _MFGTypeState extends State<MFGType> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(collectionTypeList[index].mkTypeName.toString()),
+                                  Text(collectionTypeList[index].materialName.toString()),
                                 ],
                               ),
                             )),
@@ -120,8 +119,8 @@ class _MFGTypeState extends State<MFGType> {
       //isLoading=true;
     });
 
-    apiService
-        .getMFGType()
+    MaterialTypeRequest request = MaterialTypeRequest(prodeId: ptype);
+    apiService.GetMaterialType(request)
         .then((value) => {
               if (value.messageId == 1)
                 {

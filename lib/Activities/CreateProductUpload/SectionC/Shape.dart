@@ -6,6 +6,7 @@ import 'package:jewelssky/Model/Shape/ShapeResponse.dart';
 
 import 'package:jewelssky/Model/Shape/ShapeRequest.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jewelssky/Utils/mUtils.dart';
 
 class Shape extends StatefulWidget {
   String col = "";
@@ -28,7 +29,7 @@ class Shape extends StatefulWidget {
 }
 
 class _ShapeState extends State<Shape> {
-  var isLoading = false;
+  var isLoading = true;
   var islogin = false;
   APIService apiService = APIService();
   String collection = "";
@@ -77,11 +78,12 @@ class _ShapeState extends State<Shape> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
+                 Text(
                   "Shape",
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                   style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
                 ),
                 Expanded(
+                  flex: 9,
                   child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: collectionTypeList.length,
@@ -106,6 +108,18 @@ class _ShapeState extends State<Shape> {
                     ),
                   ),
                 ),
+                Expanded(
+                  flex: 1,
+                  child: TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('BACK'),
+                  ),
+                )
               ],
             ),
           ),
@@ -120,7 +134,7 @@ class _ShapeState extends State<Shape> {
 
   void hitApi(String ptype) {
     setState(() {
-      //isLoading=true;
+      isLoading=true;
     });
 
     ShapeRequest request = ShapeRequest(matType: materialID);

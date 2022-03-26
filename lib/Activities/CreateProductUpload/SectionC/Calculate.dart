@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jewelssky/Activities/CreateProductUpload/SectionB/LabCertified.dart';
+import 'package:jewelssky/Activities/CreateProductUpload/SectionC/MaterialType.dart';
 import 'package:jewelssky/HttpService/APIService.dart';
 import 'package:jewelssky/Model/SettingA/SettingResponse.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
@@ -129,6 +130,8 @@ class _CalculateState extends State<Calculate> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextField(
+                    readOnly: true,
+                    enabled: false,
                     keyboardType: TextInputType.number,
                     controller: Pointer,
                     decoration: InputDecoration(
@@ -139,23 +142,90 @@ class _CalculateState extends State<Calculate> {
                       focusColor: mUtis.backgroundColorr,
                     ),
                   ),
+                ),const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  child: TextField(
+                    readOnly: true,
+                    enabled: false,
+                    keyboardType: TextInputType.number,
+                    controller: Pointer,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      labelText: 'Total Value',
+                      fillColor: mUtis.backgroundColorr,
+                      hoverColor: mUtis.backgroundColorr,
+                      focusColor: mUtis.backgroundColorr,
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                  height: 50,
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: RaisedButton(
-                    textColor: Colors.white,
-                    color: mUtis.backgroundColorr,
-                    child: const Text('Next'),
+
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 50,
+                        padding: const EdgeInsets.fromLTRB(10, 0, 5, 0),
+                        child: RaisedButton(
+                          textColor: Colors.white,
+                          color: mUtis.backgroundColorr,
+                          child: const Text('ADD MORE'),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => MaterialTypeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                            );
+                          },
+                        ),
+                      ),
+                    ),Expanded(
+                      child: Container(
+                        height: 50,
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        child: RaisedButton(
+                          textColor: Colors.white,
+                          color: mUtis.backgroundColorr,
+                          child: const Text('VIEW ALL'),
+                          onPressed: () {
+
+                          },
+                        ),
+                      ),
+                    ),Expanded(
+                      child: Container(
+                        height: 50,
+                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                        child: RaisedButton(
+                          textColor: Colors.white,
+                          color: mUtis.backgroundColorr,
+                          child: const Text('SAVE'),
+                          onPressed: () {
+                           /* Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => LabCertified(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                            );*/
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                    ),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LabCertified(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
-                      );
+                      Navigator.pop(context);
                     },
+                    child: Text('BACK'),
                   ),
                 ),
               ],

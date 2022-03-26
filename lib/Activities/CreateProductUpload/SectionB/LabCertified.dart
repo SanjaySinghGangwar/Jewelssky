@@ -24,7 +24,7 @@ class LabCertified extends StatefulWidget {
 }
 
 class _LabCertifiedState extends State<LabCertified> {
-  var isLoading = false;
+  var isLoading = true;
   var islogin = false;
   APIService apiService = APIService();
   String collection = "";
@@ -67,41 +67,74 @@ class _LabCertifiedState extends State<LabCertified> {
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  "Lab Certified",
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    itemCount: collectionTypeList.length,
-                    itemBuilder: (context, index) => InkWell(
-                      onTap: () => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => MFGType(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
-                        ),
-                      },
-                      child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(collectionTypeList[index].certiName.toString()),
-                              ],
-                            ),
-                          )),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                   Text(
+                    "Lab Certified",
+                    style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: collectionTypeList.length,
+                      itemBuilder: (context, index) => InkWell(
+                        onTap: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MFGType(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                          ),
+                        },
+                        child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(collectionTypeList[index].certiName.toString()),
+                                ],
+                              ),
+                            )),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 4.0),
+                      child: RaisedButton(
+                        textColor: Colors.white,
+                        color: mUtis.backgroundColorr,
+                        child: const Text('SKIP'),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MFGType(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: TextButton(
+                      style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('BACK'),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -115,7 +148,7 @@ class _LabCertifiedState extends State<LabCertified> {
 
   void hitApi(String ptype) {
     setState(() {
-      //isLoading=true;
+      isLoading=true;
     });
 
     apiService

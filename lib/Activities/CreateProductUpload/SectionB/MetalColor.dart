@@ -6,6 +6,7 @@ import 'package:jewelssky/HttpService/APIService.dart';
 import 'package:jewelssky/Model/MetalColor/MetalColorRequest.dart';
 import 'package:jewelssky/Model/MetalColor/MetalColorResponse.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jewelssky/Utils/mUtils.dart';
 
 class MetalColor extends StatefulWidget {
   String col = "";
@@ -26,7 +27,7 @@ class MetalColor extends StatefulWidget {
 }
 
 class _MetalColorState extends State<MetalColor> {
-  var isLoading = false;
+  var isLoading = true;
   var islogin = false;
   APIService apiService = APIService();
   String collection = "";
@@ -74,11 +75,12 @@ class _MetalColorState extends State<MetalColor> {
                       const SizedBox(
                         height: 20,
                       ),
-                      const Text(
+                       Text(
                         "Metal Color",
-                        style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                        style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
                       ),
                       Expanded(
+                        flex: 9,
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           itemCount: collectionTypeList.length,
@@ -103,6 +105,18 @@ class _MetalColorState extends State<MetalColor> {
                           ),
                         ),
                       ),
+                      Expanded(
+                        flex: 1,
+                        child: TextButton(
+                          style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('BACK'),
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -117,7 +131,7 @@ class _MetalColorState extends State<MetalColor> {
 
   void hitApi(String ptype) {
     setState(() {
-      //isLoading=true;
+      isLoading=true;
     });
 
     apiService

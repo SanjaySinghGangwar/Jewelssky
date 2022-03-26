@@ -9,6 +9,7 @@ import 'package:jewelssky/Model/ColorA/ColorAResponse.dart';
 import 'package:jewelssky/Model/Shape/ShapeRequest.dart';
 import 'package:jewelssky/Model/SizeA/SizeARequest.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jewelssky/Utils/mUtils.dart';
 
 class ColorA extends StatefulWidget {
   String col = "";
@@ -31,7 +32,7 @@ class ColorA extends StatefulWidget {
 }
 
 class _ColorAState extends State<ColorA> {
-  var isLoading = false;
+  var isLoading = true;
   var islogin = false;
   APIService apiService = APIService();
   String collection = "";
@@ -81,11 +82,12 @@ class _ColorAState extends State<ColorA> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
+                 Text(
                   "Color",
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
                 ),
                 Expanded(
+                  flex: 9,
                   child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: collectionTypeList.length,
@@ -110,6 +112,18 @@ class _ColorAState extends State<ColorA> {
                     ),
                   ),
                 ),
+                Expanded(
+                  flex: 1,
+                  child: TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('BACK'),
+                  ),
+                )
               ],
             ),
           ),
@@ -124,7 +138,7 @@ class _ColorAState extends State<ColorA> {
 
   void hitApi(String ptype) {
     setState(() {
-      //isLoading=true;
+      isLoading=true;
     });
 
     ColorARequest request = ColorARequest(matType: materialID);

@@ -7,6 +7,7 @@ import 'package:jewelssky/Model/RequiredOrderTime/RequiredOrderTime.dart';
 import 'package:jewelssky/Model/SaveDesignSetFirst/SaveDesignSetFirstRequest.dart';
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jewelssky/Utils/mUtils.dart';
 
 class RequiredOrderTime extends StatefulWidget {
   String col = "";
@@ -76,11 +77,12 @@ class _RequiredOrderTimeState extends State<RequiredOrderTime> {
                   const SizedBox(
                     height: 30,
                   ),
-                  const Text(
+                   Text(
                     "Required Order Time",
-                    style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                    style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
                   ),
                   Expanded(
+                    flex: 9,
                     child: ListView.builder(
                       scrollDirection: Axis.vertical,
                       itemCount: list.length,
@@ -94,6 +96,18 @@ class _RequiredOrderTimeState extends State<RequiredOrderTime> {
                       ),
                     ),
                   ),
+                  Expanded(
+                    flex: 1,
+                    child: TextButton(
+                      style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('BACK'),
+                    ),
+                  )
                 ],
               ),
             ),

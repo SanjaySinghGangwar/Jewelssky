@@ -52,9 +52,9 @@ class _CreateProductUploadState extends State<CreateProductUpload> {
                   const SizedBox(
                     height: 60,
                   ),
-                  const Text(
+                   Text(
                     "Stock Type",
-                    style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                     style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
                   ),
                   const SizedBox(
                     height: 10,
@@ -88,109 +88,7 @@ class _CreateProductUploadState extends State<CreateProductUpload> {
             ),
           ),
         ),
-      ); /*MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: mUtis.backgroundColorr,
-        ),
-        home: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Container(
-            constraints: const BoxConstraints.expand(),
-            decoration: const BoxDecoration(
-              image: DecorationImage(image: AssetImage("assets/icon.png"), fit: BoxFit.fitWidth, opacity: 220),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: ListView(
-                children: <Widget>[
-                  const SizedBox(
-                    height: 60,
-                  ),
-                  Text(
-                    "Stock Type",
-                    style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    elevation: 10,
-                    child: InkWell(
-                      onTap: () {
-
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => productType("UES")));
-                      },
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
-                            children: const [
-                              Text("Ready Stock"),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    elevation: 10,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => productType("Order Stock")),
-                        );
-                      },
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
-                            children: const [
-                              Text("Order Stock"),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Enter HUID (Optional)",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    child: TextField(
-                      controller: HUID,
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        labelText: 'Enter HUID',
-                        fillColor: mUtis.backgroundColorr,
-                        hoverColor: mUtis.backgroundColorr,
-                        focusColor: mUtis.backgroundColorr,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      );*/
+      );
     } else {
       return const Login();
     }
@@ -207,7 +105,7 @@ class _CreateProductUploadState extends State<CreateProductUpload> {
           onTap: () => {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => productType(list[index].value! , HUID.text)),
+              MaterialPageRoute(builder: (context) => productType(list[index].value!, HUID.text)),
             ),
           },
           child: Card(

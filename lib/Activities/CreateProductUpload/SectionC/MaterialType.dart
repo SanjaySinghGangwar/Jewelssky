@@ -5,6 +5,7 @@ import 'package:jewelssky/HttpService/APIService.dart';
 import 'package:jewelssky/Model/MaterialType/MaterialTypeRequest.dart';
 import 'package:jewelssky/Model/MaterialType/MaterialTypeResponse.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jewelssky/Utils/mUtils.dart';
 
 class MaterialTypeA extends StatefulWidget {
   String col = "";
@@ -25,7 +26,7 @@ class MaterialTypeA extends StatefulWidget {
 }
 
 class _MaterialTypeAState extends State<MaterialTypeA> {
-  var isLoading = false;
+  var isLoading = true;
   var islogin = false;
   APIService apiService = APIService();
   String collection = "";
@@ -73,11 +74,12 @@ class _MaterialTypeAState extends State<MaterialTypeA> {
                       const SizedBox(
                         height: 20,
                       ),
-                      const Text(
+                       Text(
                         "Material Type",
-                        style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                        style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
                       ),
                       Expanded(
+                        flex: 9,
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           itemCount: collectionTypeList.length,
@@ -102,6 +104,18 @@ class _MaterialTypeAState extends State<MaterialTypeA> {
                           ),
                         ),
                       ),
+                      Expanded(
+                        flex: 1,
+                        child: TextButton(
+                          style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('BACK'),
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -116,7 +130,7 @@ class _MaterialTypeAState extends State<MaterialTypeA> {
 
   void hitApi(String ptype) {
     setState(() {
-      //isLoading=true;
+      isLoading=true;
     });
 
     MaterialTypeRequest request = MaterialTypeRequest(prodeId: ptype);

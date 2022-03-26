@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:jewelssky/Model/AddSpecification/AddSpecificationRequest.dart';
 import 'package:jewelssky/Model/Category/CategortRequest.dart';
 import 'package:jewelssky/Model/Category/CategoryResponse.dart';
 import 'package:jewelssky/Model/ColorA/ColorARequest.dart';
@@ -225,6 +226,16 @@ class APIService {
     final response = await http.post(Uri.parse(mUtis().BaseURL + 'Setting_Master'), body: null);
     if (response.statusCode == 200 || response.statusCode == 400) {
       return SettingResponse.fromJson(
+        json.decode(response.body),
+      );
+    } else {
+      throw Exception('Failed to load data!');
+    }
+  }
+  Future<AddSpecificationRequest> AddSpecification(AddSpecificationRequest requestModel) async {
+    final response = await http.post(Uri.parse(mUtis().BaseURL + 'Add_Specification'), body: requestModel.toJson());
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      return AddSpecificationRequest.fromJson(
         json.decode(response.body),
       );
     } else {

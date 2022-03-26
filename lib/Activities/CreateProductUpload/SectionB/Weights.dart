@@ -76,6 +76,7 @@ class _WeightsState extends State<Weights> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
+                    keyboardType: TextInputType.number,
                     controller: GrossWeight,
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
@@ -89,7 +90,9 @@ class _WeightsState extends State<Weights> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
-                    controller: NetWeight,
+                    controller: GrossWeight,
+                    readOnly: true,
+                    enabled: false,
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       labelText: 'Net Weight (In Grm.)',
@@ -119,8 +122,10 @@ class _WeightsState extends State<Weights> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextField(
+                    readOnly: true,
+                    enabled: false,
                     keyboardType: TextInputType.number,
-                    controller: WastageAmt,
+                    controller: Wastage,
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       labelText: 'Wastage Amt.',
@@ -141,13 +146,33 @@ class _WeightsState extends State<Weights> {
                     color: mUtis.backgroundColorr,
                     child: const Text('Next'),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LabCertified(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
-                      );
+                      if (GrossWeight.text.toString().isNotEmpty) {
+                        if (Wastage.text.toString().isNotEmpty) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => LabCertified(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                          );
+                        } else {
+                          mUtis.mToast("Enter Wastage amount");
+                        }
+                      } else {
+                        mUtis.mToast("Enter Gross Weight");
+                      }
                     },
                   ),
                 ),
+                Expanded(
+                  flex: 1,
+                  child: TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('BACK'),
+                  ),
+                )
               ],
             ),
           ),

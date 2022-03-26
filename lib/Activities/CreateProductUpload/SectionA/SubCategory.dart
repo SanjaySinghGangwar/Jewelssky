@@ -4,6 +4,7 @@ import 'package:jewelssky/Common/Loader.dart';
 import 'package:jewelssky/HttpService/APIService.dart';
 import 'package:jewelssky/Model/SubCategory/SubCategoryRequest.dart';
 import 'package:jewelssky/Model/SubCategory/SubCategoryResponse.dart';
+import 'package:jewelssky/Utils/mUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SubCategory extends StatefulWidget {
@@ -66,11 +67,12 @@ class _SubCategoryState extends State<SubCategory> {
                       SizedBox(
                         height: 30,
                       ),
-                      const Text(
+                       Text(
                         "Sub Category",
-                        style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                         style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
                       ),
                       Expanded(
+                        flex: 9,
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           itemCount: collectionTypeList.length,
@@ -78,7 +80,7 @@ class _SubCategoryState extends State<SubCategory> {
                             onTap: () => {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => MWCollection(stockType, HUID, ptype, collection, col, cat,collectionTypeList[index].sCatId.toString())),
+                                MaterialPageRoute(builder: (context) => MWCollection(stockType, HUID, ptype, collection, col, cat, collectionTypeList[index].sCatId.toString())),
                               ),
                             },
                             child: Card(
@@ -89,6 +91,18 @@ class _SubCategoryState extends State<SubCategory> {
                           ),
                         ),
                       ),
+                      Expanded(
+                        flex: 1,
+                        child: TextButton(
+                          style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(mUtis.backgroundColorr),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('BACK'),
+                        ),
+                      )
                     ],
                   ),
                 ),

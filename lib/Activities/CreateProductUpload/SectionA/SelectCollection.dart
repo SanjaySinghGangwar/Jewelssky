@@ -6,6 +6,7 @@ import 'package:jewelssky/HttpService/APIService.dart';
 import 'package:jewelssky/Model/SelectCollection/SelectCollectionRequest.dart';
 import 'package:jewelssky/Model/SelectCollection/SelectCollectionResponse.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jewelssky/Utils/mUtils.dart';
 
 class SelectCollection extends StatefulWidget {
   String ptype = "";
@@ -62,11 +63,12 @@ class _SelectCollectionState extends State<SelectCollection> {
                       const SizedBox(
                         height: 20,
                       ),
-                      const Text(
+                      Text(
                         "Select Collection",
-                        style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                        style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
                       ),
                       Expanded(
+                        flex: 9,
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           itemCount: collectionTypeList.length,
@@ -85,6 +87,18 @@ class _SelectCollectionState extends State<SelectCollection> {
                           ),
                         ),
                       ),
+                      Expanded(
+                        flex: 1,
+                        child: TextButton(
+                          style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('BACK'),
+                        ),
+                      )
                     ],
                   ),
                 ),

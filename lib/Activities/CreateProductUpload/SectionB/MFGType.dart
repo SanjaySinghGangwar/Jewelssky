@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:jewelssky/Activities/CreateProductUpload/SectionC/MaterialType.dart';
 import 'package:jewelssky/Common/Loader.dart';
 import 'package:jewelssky/HttpService/APIService.dart';
@@ -26,7 +25,7 @@ class MFGType extends StatefulWidget {
 }
 
 class _MFGTypeState extends State<MFGType> {
-  var isLoading = false;
+  var isLoading = true;
   var islogin = false;
   APIService apiService = APIService();
   String collection = "";
@@ -69,41 +68,74 @@ class _MFGTypeState extends State<MFGType> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Text(
-                        "MFG Type",
-                        style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemCount: collectionTypeList.length,
-                          itemBuilder: (context, index) => InkWell(
-                            onTap: () => {
-                              Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => MaterialTypeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 20,
                         ),
-                            },
-                            child: Card(
-                                child: Padding(
-                              padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(collectionTypeList[index].mkTypeName.toString()),
-                                ],
-                              ),
-                            )),
+                         Text(
+                          "MFG Type",
+                          style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
+                        ),
+                        Expanded(
+                          flex: 8,
+                          child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: collectionTypeList.length,
+                            itemBuilder: (context, index) => InkWell(
+                              onTap: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => MaterialTypeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                                ),
+                              },
+                              child: Card(
+                                  child: Padding(
+                                padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(collectionTypeList[index].mkTypeName.toString()),
+                                  ],
+                                ),
+                              )),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 4.0),
+                            child: RaisedButton(
+                              textColor: Colors.white,
+                              color: mUtis.backgroundColorr,
+                              child: const Text('SKIP'),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => MaterialTypeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: TextButton(
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('BACK'),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -117,7 +149,7 @@ class _MFGTypeState extends State<MFGType> {
 
   void hitApi(String ptype) {
     setState(() {
-      //isLoading=true;
+      isLoading=true;
     });
 
     apiService

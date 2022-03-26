@@ -5,6 +5,7 @@ import 'package:jewelssky/HttpService/APIService.dart';
 import 'package:jewelssky/Model/Category/CategortRequest.dart';
 import 'package:jewelssky/Model/Category/CategoryResponse.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jewelssky/Utils/mUtils.dart';
 
 class Category extends StatefulWidget {
   String collection = "";
@@ -62,11 +63,12 @@ class _CategoryState extends State<Category> {
                       const SizedBox(
                         height: 30,
                       ),
-                      const Text(
+                       Text(
                         "Select Category",
-                        style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                        style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
                       ),
                       Expanded(
+                        flex: 9,
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           itemCount: categoryList.length,
@@ -85,6 +87,18 @@ class _CategoryState extends State<Category> {
                           ),
                         ),
                       ),
+                      Expanded(
+                        flex: 1,
+                        child: TextButton(
+                          style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('BACK'),
+                        ),
+                      )
                     ],
                   ),
                 ),

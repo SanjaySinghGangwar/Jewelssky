@@ -9,6 +9,7 @@ import 'package:jewelssky/Model/SettingA/SettingResponse.dart';
 import 'package:jewelssky/Model/Shape/ShapeRequest.dart';
 import 'package:jewelssky/Model/SizeA/SizeARequest.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jewelssky/Utils/mUtils.dart';
 
 
 class SettingA extends StatefulWidget {
@@ -32,7 +33,7 @@ class SettingA extends StatefulWidget {
 }
 
 class _SettingAState extends State<SettingA> {
-  var isLoading = false;
+  var isLoading = true;
   var islogin = false;
   APIService apiService = APIService();
   String collection = "";
@@ -82,11 +83,12 @@ class _SettingAState extends State<SettingA> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
+                Text(
                   "Setting",
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
                 ),
                 Expanded(
+                  flex: 9,
                   child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: collectionTypeList.length,
@@ -111,6 +113,18 @@ class _SettingAState extends State<SettingA> {
                     ),
                   ),
                 ),
+                Expanded(
+                  flex: 1,
+                  child: TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('BACK'),
+                  ),
+                )
               ],
             ),
           ),
@@ -125,7 +139,7 @@ class _SettingAState extends State<SettingA> {
 
   void hitApi(String ptype) {
     setState(() {
-      //isLoading=true;
+      isLoading=true;
     });
 
 apiService.getSetting().whenComplete(() => {print("YESSSSSSS")});

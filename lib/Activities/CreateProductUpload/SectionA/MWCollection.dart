@@ -7,6 +7,7 @@ import 'package:jewelssky/Model/MWCollection/MWCollectionRequest.dart';
 import 'package:jewelssky/Model/MWCollection/MWCollectionResponse.dart';
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jewelssky/Utils/mUtils.dart';
 
 class MWCollection extends StatefulWidget {
   String col = "";
@@ -70,11 +71,12 @@ class _MWCollectionState extends State<MWCollection> {
                       const SizedBox(
                         height: 30,
                       ),
-                      const Text(
+                       Text(
                         "M/W Collection",
-                        style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                         style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
                       ),
                       Expanded(
+                        flex: 9,
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           itemCount: collectionTypeList.length,
@@ -93,6 +95,18 @@ class _MWCollectionState extends State<MWCollection> {
                           ),
                         ),
                       ),
+                      Expanded(
+                        flex: 1,
+                        child: TextButton(
+                          style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('BACK'),
+                        ),
+                      )
                     ],
                   ),
                 ),

@@ -7,6 +7,7 @@ import 'package:jewelssky/Model/ProductType/ProductTypeRequest.dart';
 import 'package:jewelssky/Model/ProductType/ProductTypeResponse.dart';
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jewelssky/Utils/mUtils.dart';
 
 class productType extends StatefulWidget {
   String stockType = "";
@@ -59,12 +60,13 @@ class _productTypeState extends State<productType> {
                   child: Column(
                     children: [
                       SizedBox(height: 30),
-                      const Text(
+                       Text(
                         "PRODUCT TYPE",
                         textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                        style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
                       ),
                       Expanded(
+                        flex: 9,
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           itemCount: productTypeList.length,
@@ -84,6 +86,18 @@ class _productTypeState extends State<productType> {
                           ),
                         ),
                       ),
+                      Expanded(
+                        flex: 1,
+                        child: TextButton(
+                          style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('BACK'),
+                        ),
+                      )
                     ],
                   ),
                 ),

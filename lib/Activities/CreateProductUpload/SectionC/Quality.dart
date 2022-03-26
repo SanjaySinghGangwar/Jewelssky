@@ -8,6 +8,7 @@ import 'package:jewelssky/Model/Quality/QualityResponse.dart';
 import 'package:jewelssky/Model/Shape/ShapeRequest.dart';
 import 'package:jewelssky/Model/SizeA/SizeARequest.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jewelssky/Utils/mUtils.dart';
 
 class Quality extends StatefulWidget {
   String col = "";
@@ -30,7 +31,7 @@ class Quality extends StatefulWidget {
 }
 
 class _QualityState extends State<Quality> {
-  var isLoading = false;
+  var isLoading = true;
   var islogin = false;
   APIService apiService = APIService();
   String collection = "";
@@ -80,11 +81,12 @@ class _QualityState extends State<Quality> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
+                 Text(
                   "Quality",
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
                 ),
                 Expanded(
+                  flex: 9,
                   child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: collectionTypeList.length,
@@ -109,6 +111,18 @@ class _QualityState extends State<Quality> {
                     ),
                   ),
                 ),
+                Expanded(
+                  flex: 1,
+                  child: TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('BACK'),
+                  ),
+                )
               ],
             ),
           ),
@@ -123,7 +137,7 @@ class _QualityState extends State<Quality> {
 
   void hitApi(String ptype) {
     setState(() {
-      //isLoading=true;
+      isLoading=true;
     });
 
     QualityRequest request = QualityRequest(matType: materialID);

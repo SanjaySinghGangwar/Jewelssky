@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:jewelssky/Model/AddSpecification/AddSpecificationRequest.dart';
+import 'package:jewelssky/Model/AddSpecification/AddSpecificationResponse.dart';
 import 'package:jewelssky/Model/Category/CategortRequest.dart';
 import 'package:jewelssky/Model/Category/CategoryResponse.dart';
 import 'package:jewelssky/Model/ColorA/ColorARequest.dart';
@@ -34,6 +35,8 @@ import 'package:jewelssky/Model/SubCategory/SubCategoryRequest.dart';
 import 'package:jewelssky/Model/SubCategory/SubCategoryResponse.dart';
 import 'package:jewelssky/Model/VerifyOtp/VerifyOtpRequest.dart';
 import 'package:jewelssky/Model/VerifyOtp/VerifyOtpResponse.dart';
+import 'package:jewelssky/Model/jobWiseMaterialDetails/jobWiseMaterialDetailsRequest.dart';
+import 'package:jewelssky/Model/jobWiseMaterialDetails/jobWiseMaterialDetailsResponse.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
 
 class APIService {
@@ -232,10 +235,21 @@ class APIService {
       throw Exception('Failed to load data!');
     }
   }
-  Future<AddSpecificationRequest> AddSpecification(AddSpecificationRequest requestModel) async {
+  Future<AddSpecificationResponse> AddSpecification(AddSpecificationRequest requestModel) async {
     final response = await http.post(Uri.parse(mUtis().BaseURL + 'Add_Specification'), body: requestModel.toJson());
     if (response.statusCode == 200 || response.statusCode == 400) {
-      return AddSpecificationRequest.fromJson(
+      return AddSpecificationResponse.fromJson(
+        json.decode(response.body),
+      );
+    } else {
+      throw Exception('Failed to load data!');
+    }
+  }
+
+  Future<jobWiseMaterialDetailsResponse> jobWiseMaterialDetails(jobWiseMaterialDetailsRequest requestModel) async {
+    final response = await http.post(Uri.parse(mUtis().BaseURL + 'Job_Wise_Material_Details'), body: requestModel.toJson());
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      return jobWiseMaterialDetailsResponse.fromJson(
         json.decode(response.body),
       );
     } else {

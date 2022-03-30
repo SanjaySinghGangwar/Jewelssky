@@ -102,7 +102,7 @@ class _WeightsState extends State<Weights> {
                     ),
                   ),
                 ),
-                Container(
+                /* Container(
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextField(
                     keyboardType: TextInputType.number,
@@ -137,7 +137,7 @@ class _WeightsState extends State<Weights> {
                 ),
                 const SizedBox(
                   height: 20,
-                ),
+                ),*/
                 Container(
                   height: 50,
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -147,14 +147,10 @@ class _WeightsState extends State<Weights> {
                     child: const Text('Next'),
                     onPressed: () {
                       if (GrossWeight.text.toString().isNotEmpty) {
-                        if (Wastage.text.toString().isNotEmpty) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => LabCertified(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
-                          );
-                        } else {
-                          mUtis.mToast("Enter Wastage amount");
-                        }
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LabCertified(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                        );
                       } else {
                         mUtis.mToast("Enter Gross Weight");
                       }
@@ -165,7 +161,7 @@ class _WeightsState extends State<Weights> {
                   flex: 1,
                   child: TextButton(
                     style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                      foregroundColor: MaterialStateProperty.all<Color>(mUtis.backgroundColorr),
                     ),
                     onPressed: () {
                       Navigator.pop(context);

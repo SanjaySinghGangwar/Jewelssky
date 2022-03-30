@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jewelssky/Activities/CreateProductUpload/SectionA/createProductUpload.dart';
 import 'package:jewelssky/Activities/LoginScreen.dart';
+import 'package:jewelssky/Utils/AppModel.dart';
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -29,10 +32,39 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return islogin
-        ? const MaterialApp(
+        ? MaterialApp(
             debugShowCheckedModeBanner: false,
             home: Scaffold(
-              body: Text("HOME"),
+              body: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Provider.of<AppModel>(context, listen: false).updateTitle("NEW PRODUCT UPLOAD");
+                      },
+                      child: Card(
+                          child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 100,
+                              height: 100,
+                              child: Image.asset(
+                                "assets/box.png",
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Text('New Product Upload'),
+                          ],
+                        ),
+                      )),
+                    ),
+                  ],
+                ),
+              ),
             ),
           )
         : Login();

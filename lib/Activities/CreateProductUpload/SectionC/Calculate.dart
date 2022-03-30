@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:jewelssky/Activities/CreateProductUpload/SectionB/LabCertified.dart';
-import 'package:jewelssky/Activities/CreateProductUpload/SectionC/MaterialType.dart';
+import 'package:jewelssky/Activities/CreateProductUpload/SectionC/JobWiseMaterialDetails.dart';
+import 'package:jewelssky/Activities/CreateProductUpload/SectionD/UploadImage.dart';
 import 'package:jewelssky/HttpService/APIService.dart';
+import 'package:jewelssky/Model/AddSpecification/AddSpecificationRequest.dart';
 import 'package:jewelssky/Model/SettingA/SettingResponse.dart';
+import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'MaterialType.dart';
 
 class Calculate extends StatefulWidget {
   String col = "";
@@ -50,9 +54,26 @@ class _CalculateState extends State<Calculate> {
   _CalculateState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, this.materialID, this.shapeId);
 
   TextEditingController Pcs = TextEditingController();
-  TextEditingController Ctw = TextEditingController();
-  TextEditingController Rate = TextEditingController();
+  TextEditingController CtwController = TextEditingController();
+  TextEditingController RateController = TextEditingController();
   TextEditingController Pointer = TextEditingController();
+  TextEditingController totalValue = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    Pcs.text = "0";
+    CtwController.text = "0";
+    RateController.text = "0";
+    Pointer.text = "0";
+    totalValue.text = "0";
+
+    initializePreference().whenComplete(() {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +109,7 @@ class _CalculateState extends State<Calculate> {
                   padding: const EdgeInsets.all(10),
                   child: TextField(
                     controller: Pcs,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       labelText: 'Pcs',
@@ -100,7 +122,8 @@ class _CalculateState extends State<Calculate> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
-                    controller: Ctw,
+                    keyboardType: TextInputType.number,
+                    controller: CtwController,
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       labelText: 'Ctw',
@@ -114,7 +137,7 @@ class _CalculateState extends State<Calculate> {
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextField(
                     keyboardType: TextInputType.number,
-                    controller: Rate,
+                    controller: RateController,
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       labelText: 'Rate',
@@ -133,7 +156,7 @@ class _CalculateState extends State<Calculate> {
                     readOnly: true,
                     enabled: false,
                     keyboardType: TextInputType.number,
-                    controller: Pointer,
+                    controller: calculatePointer(Pcs.text.toString(), CtwController.text.toString()),
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       labelText: 'Pointer',
@@ -142,7 +165,8 @@ class _CalculateState extends State<Calculate> {
                       focusColor: mUtis.backgroundColorr,
                     ),
                   ),
-                ),const SizedBox(
+                ),
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
@@ -151,7 +175,7 @@ class _CalculateState extends State<Calculate> {
                     readOnly: true,
                     enabled: false,
                     keyboardType: TextInputType.number,
-                    controller: Pointer,
+                    controller: getTotalValue(CtwController.text.toString(), RateController.text.toString()),
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       labelText: 'Total Value',
@@ -164,7 +188,6 @@ class _CalculateState extends State<Calculate> {
                 const SizedBox(
                   height: 20,
                 ),
-
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -178,14 +201,12 @@ class _CalculateState extends State<Calculate> {
                           color: mUtis.backgroundColorr,
                           child: const Text('ADD MORE'),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => MaterialTypeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
-                            );
+                            addDataToServer(false);
                           },
                         ),
                       ),
-                    ),Expanded(
+                    ),
+                    Expanded(
                       child: Container(
                         height: 50,
                         padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -195,10 +216,15 @@ class _CalculateState extends State<Calculate> {
                           child: const Text('VIEW ALL'),
                           onPressed: () {
 
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => JobWiseMaterialDesign("")),
+                            );
                           },
                         ),
                       ),
-                    ),Expanded(
+                    ),
+                    Expanded(
                       child: Container(
                         height: 50,
                         padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
@@ -207,10 +233,7 @@ class _CalculateState extends State<Calculate> {
                           color: mUtis.backgroundColorr,
                           child: const Text('SAVE'),
                           onPressed: () {
-                           /* Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => LabCertified(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
-                            );*/
+                            addDataToServer(true);
                           },
                         ),
                       ),
@@ -220,7 +243,7 @@ class _CalculateState extends State<Calculate> {
                 Expanded(
                   child: TextButton(
                     style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                      foregroundColor: MaterialStateProperty.all<Color>(mUtis.backgroundColorr),
                     ),
                     onPressed: () {
                       Navigator.pop(context);
@@ -234,5 +257,64 @@ class _CalculateState extends State<Calculate> {
         ),
       ),
     );
+  }
+
+  void addDataToServer(bool flag) {
+   /* Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => UpLoadImage(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId)),
+    );*/
+
+
+    setState(() {
+
+      isLoading = true;
+    });
+    AddSpecificationRequest request = AddSpecificationRequest(userId: preferences!.getString(mSharedPreference().userID), id: "", materialId: materialID, materialType: "", shape: "", shapeId: shapeId, quality: "", qualityId: "", materialcolor: "", materialcolorId: materialID, matsize: "", matsizeId: "", sett: "", settNm: "", pcs: Pcs.text.toString(), ctw: CtwController.text.toString(), pointer: Pointer.text.toString(), rate: RateController.text.toString(), dgno: "", geniid: "");
+    apiService.AddSpecification(request)
+        .then((value) => {
+              if (value.messageId == 1)
+                {
+                  setState(() {
+                    isLoading = false;
+                    if (flag) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => UpLoadImage(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId)),
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MaterialTypeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                      );
+                    }
+                  })
+                }
+            })
+        .onError((error, stackTrace) => {});
+  }
+
+  getTotalValue(String ctwValue, String ratee) {
+    if (ctwValue.isNotEmpty && ratee.isNotEmpty) {
+      totalValue.text = (double.parse(ctwValue) * double.parse(ratee)).toString();
+    } else {
+      totalValue.text = "0";
+    }
+    return totalValue;
+  }
+
+  calculatePointer(
+    String pcs,
+    String ctw,
+  ) {
+    if (pcs.isNotEmpty && ctw.isNotEmpty) {
+      Pointer.text = (double.parse(ctw) / double.parse(pcs)).toString();
+    } else {
+      Pointer.text = "0";
+    }
+    return Pointer;
+  }
+  Future<void> initializePreference() async {
+    preferences = await SharedPreferences.getInstance();
   }
 }

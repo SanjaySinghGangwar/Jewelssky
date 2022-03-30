@@ -63,9 +63,9 @@ class _CreateProductUploadState extends State<CreateProductUpload> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
+                  Text(
                     "Enter HUID (Optional)",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(color: mUtis.backgroundColorr,fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 10,

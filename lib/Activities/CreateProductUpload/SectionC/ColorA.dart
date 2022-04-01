@@ -24,11 +24,18 @@ class ColorA extends StatefulWidget {
   String cultId = "";
   String materialID = "";
   String shapeId = "";
+  String materialSize = "";
+  String materialSizeID = "";
+  String shape = "";
+  String quality = "";
+  String qualityID = "";
+  String materialName = "";
+  String dgno;String geniid;
 
-  ColorA(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.materialID,this.shapeId,{Key? key}) : super(key: key);
+  ColorA(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.materialID,this.shapeId,this.materialSize,this.materialSizeID,this.shape,this.quality,this.qualityID,this.materialName,this.dgno,this.geniid,{Key? key}) : super(key: key);
 
   @override
-  _ColorAState createState() => _ColorAState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,materialID,shapeId);
+  _ColorAState createState() => _ColorAState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,materialID,shapeId,materialSize,materialSizeID,shape,quality,qualityID,materialName,dgno,geniid);
 }
 
 class _ColorAState extends State<ColorA> {
@@ -47,12 +54,19 @@ class _ColorAState extends State<ColorA> {
   String cultId = "";
   String materialID = "";
   String shapeId = "";
+  String materialSize = "";
+  String materialSizeID = "";
+  String shape = "";
+  String quality = "";
+  String qualityID = "";
+  String materialName = "";
+  String dgno;String geniid;
 
   List<Data> collectionTypeList = [];
 
   SharedPreferences? preferences;
 
-  _ColorAState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.materialID,this.shapeId);
+  _ColorAState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.materialID,this.shapeId,this.materialSize,this.materialSizeID,this.shape,this.quality,this.qualityID,this.materialName,this.dgno,this.geniid);
 
   @override
   void initState() {
@@ -95,7 +109,7 @@ class _ColorAState extends State<ColorA> {
                       onTap: () => {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SettingA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,materialID,shapeId)),
+                          MaterialPageRoute(builder: (context) => SettingA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,materialID,shapeId,materialSize,materialSizeID,collectionTypeList[index].matColId.toString(),collectionTypeList[index].color.toString(),shape,quality,qualityID,materialName,dgno,geniid)),
                         ),
                       },
                       child: Card(

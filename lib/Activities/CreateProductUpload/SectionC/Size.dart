@@ -23,11 +23,14 @@ class SizeA extends StatefulWidget {
   String cultId = "";
   String materialID = "";
   String shapeId = "";
+  String shape = "";
+  String materialName = "";
+  String dgno;String geniid;
 
-   SizeA(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.materialID,this.shapeId,{Key? key}) : super(key: key);
+   SizeA(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.materialID,this.shapeId,this.shape,this.materialName,this.dgno,this.geniid,{Key? key}) : super(key: key);
 
   @override
-  _SizeAState createState() => _SizeAState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,materialID,shapeId);
+  _SizeAState createState() => _SizeAState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,materialID,shapeId,shape,materialName,dgno,geniid);
 }
 
 class _SizeAState extends State<SizeA> {
@@ -46,12 +49,15 @@ class _SizeAState extends State<SizeA> {
   String cultId = "";
   String materialID = "";
   String shapeId = "";
+  String shape = "";
+  String materialName = "";
+  String dgno;String geniid;
 
   List<Data> collectionTypeList = [];
 
   SharedPreferences? preferences;
 
-  _SizeAState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.materialID,this.shapeId);
+  _SizeAState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.materialID,this.shapeId,this.shape,this.materialName,this.dgno,this.geniid);
 
   @override
   void initState() {
@@ -94,7 +100,7 @@ class _SizeAState extends State<SizeA> {
                       onTap: () => {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Quality(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,materialID,shapeId)),
+                          MaterialPageRoute(builder: (context) => Quality(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,materialID,shapeId,collectionTypeList[index].size.toString(),collectionTypeList[index].matSizId.toString(),shape,materialName,dgno,geniid)),
                         ),
                       },
                       child: Card(

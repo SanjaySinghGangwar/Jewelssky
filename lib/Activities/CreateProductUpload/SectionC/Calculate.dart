@@ -23,11 +23,21 @@ class Calculate extends StatefulWidget {
   String cultId = "";
   String materialID = "";
   String shapeId = "";
-
-  Calculate(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, this.materialID, this.shapeId, {Key? key}) : super(key: key);
+  String settingName="";
+  String settingID="";
+  String materialSize = "";
+  String materialSizeID = "";
+  String materialColorID = "";
+  String materialColor = "";
+  String shape = "";
+  String quality = "";
+  String qualityID = "";
+  String materialName = "";
+  String dgno;String geniid;
+  Calculate(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, this.materialID, this.shapeId,this.settingID,this.settingName,this.materialSize,this.materialSizeID,this.materialColorID,this.materialColor,this.shape,this.quality,this.qualityID ,this.materialName,this.dgno,this.geniid,{Key? key}) : super(key: key);
 
   @override
-  _CalculateState createState() => _CalculateState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId);
+  _CalculateState createState() => _CalculateState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId,settingID,settingName,materialSize,materialSizeID,materialColorID,materialColor,shape,quality,qualityID,materialName,dgno,geniid);
 }
 
 class _CalculateState extends State<Calculate> {
@@ -46,12 +56,24 @@ class _CalculateState extends State<Calculate> {
   String cultId = "";
   String materialID = "";
   String shapeId = "";
+  String settingName="";
+  String settingID="";
+  String materialSize = "";
+  String materialSizeID = "";
+  String materialColorID = "";
+  String materialColor = "";
+  String shape = "";
+  String quality = "";
+  String qualityID = "";
+  String materialName = "";
+  String dgno;String geniid;
+
 
   List<Data> collectionTypeList = [];
 
   SharedPreferences? preferences;
 
-  _CalculateState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, this.materialID, this.shapeId);
+  _CalculateState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, this.materialID, this.shapeId,this.settingID,this.settingName,this.materialSize,this.materialSizeID,this.materialColorID,this.materialColor,this.shape,this.quality,this.qualityID,this.materialName,this.dgno,this.geniid);
 
   TextEditingController Pcs = TextEditingController();
   TextEditingController CtwController = TextEditingController();
@@ -201,7 +223,7 @@ class _CalculateState extends State<Calculate> {
                           color: mUtis.backgroundColorr,
                           child: const Text('ADD MORE'),
                           onPressed: () {
-                            addDataToServer(false);
+                            addDataToServer(1);
                           },
                         ),
                       ),
@@ -215,11 +237,8 @@ class _CalculateState extends State<Calculate> {
                           color: mUtis.backgroundColorr,
                           child: const Text('VIEW ALL'),
                           onPressed: () {
+                            addDataToServer(2);
 
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => JobWiseMaterialDesign("")),
-                            );
                           },
                         ),
                       ),
@@ -233,7 +252,7 @@ class _CalculateState extends State<Calculate> {
                           color: mUtis.backgroundColorr,
                           child: const Text('SAVE'),
                           onPressed: () {
-                            addDataToServer(true);
+                            addDataToServer(3);
                           },
                         ),
                       ),
@@ -259,7 +278,7 @@ class _CalculateState extends State<Calculate> {
     );
   }
 
-  void addDataToServer(bool flag) {
+  void addDataToServer(int flag) {
    /* Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => UpLoadImage(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId)),
@@ -270,22 +289,28 @@ class _CalculateState extends State<Calculate> {
 
       isLoading = true;
     });
-    AddSpecificationRequest request = AddSpecificationRequest(userId: preferences!.getString(mSharedPreference().userID), id: "", materialId: materialID, materialType: "", shape: "", shapeId: shapeId, quality: "", qualityId: "", materialcolor: "", materialcolorId: materialID, matsize: "", matsizeId: "", sett: "", settNm: "", pcs: Pcs.text.toString(), ctw: CtwController.text.toString(), pointer: Pointer.text.toString(), rate: RateController.text.toString(), dgno: "", geniid: "");
+    AddSpecificationRequest request = AddSpecificationRequest(userId: preferences!.getString(mSharedPreference().userID), id: ptype, materialId: materialID, materialType: materialName, shape: shape, shapeId: shapeId, quality: quality, qualityId: qualityID, materialcolor: materialColor, materialcolorId: materialColorID, matsize: materialSize, matsizeId: materialSizeID, sett: settingID, settNm: settingName, pcs: Pcs.text.toString(), ctw: CtwController.text.toString(), pointer: Pointer.text.toString(), rate: RateController.text.toString(), dgno: dgno, geniid: geniid);
     apiService.AddSpecification(request)
         .then((value) => {
               if (value.messageId == 1)
                 {
                   setState(() {
                     isLoading = false;
-                    if (flag) {
+                    if (flag==1) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => UpLoadImage(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId)),
+                        MaterialPageRoute(builder: (context) => MaterialTypeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid)),
+                      );
+
+                    }else if(flag==2){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => JobWiseMaterialDesign(value.msg.toString())),
                       );
                     } else {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => MaterialTypeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                        MaterialPageRoute(builder: (context) => UpLoadImage(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId,value.msg.toString())),
                       );
                     }
                   })

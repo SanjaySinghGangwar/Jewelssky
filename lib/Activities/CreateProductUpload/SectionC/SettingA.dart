@@ -25,11 +25,20 @@ class SettingA extends StatefulWidget {
   String cultId = "";
   String materialID = "";
   String shapeId = "";
+  String materialSize = "";
+  String materialSizeID = "";
+  String materialColorID = "";
+  String materialColor = "";
+  String shape = "";
+  String quality = "";
+  String qualityID = "";
+  String materialName = "";
+  String dgno;String geniid;
 
-   SettingA(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.materialID,this.shapeId,{Key? key}) : super(key: key);
+   SettingA(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.materialID,this.shapeId,this.materialSize,this.materialSizeID,this.materialColorID,this.materialColor,this.shape,this.quality,this.qualityID,this.materialName,this.dgno,this.geniid,{Key? key}) : super(key: key);
 
   @override
-  _SettingAState createState() => _SettingAState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,materialID,shapeId);
+  _SettingAState createState() => _SettingAState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,materialID,shapeId,materialSize,materialSizeID,materialColorID,materialColor,shape,quality,qualityID,materialName,dgno,geniid);
 }
 
 class _SettingAState extends State<SettingA> {
@@ -48,12 +57,20 @@ class _SettingAState extends State<SettingA> {
   String cultId = "";
   String materialID = "";
   String shapeId = "";
+  String materialSize = "";
+  String materialSizeID = "";
+  String materialColorID = "";
+  String materialColor = "";
+  String shape = "";  String quality = "";
+  String qualityID = "";
+  String materialName = "";
+  String dgno;String geniid;
 
   List<Data> collectionTypeList = [];
 
   SharedPreferences? preferences;
 
-  _SettingAState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.materialID,this.shapeId);
+  _SettingAState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.materialID,this.shapeId,this.materialSize,this.materialSizeID,this.materialColorID,this.materialColor,this.shape,this.quality,this.qualityID,this.materialName,this.dgno,this.geniid);
 
   @override
   void initState() {
@@ -96,7 +113,7 @@ class _SettingAState extends State<SettingA> {
                       onTap: () => {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Calculate(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId)),
+                          MaterialPageRoute(builder: (context) => Calculate(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId,collectionTypeList[index].settId.toString(),collectionTypeList[index].settingName.toString(),materialSize,materialSizeID,materialColorID,materialColor,shape,quality,qualityID,materialName,dgno,geniid)),
                         ),
                       },
                       child: Card(
@@ -142,7 +159,6 @@ class _SettingAState extends State<SettingA> {
       isLoading=true;
     });
 
-apiService.getSetting().whenComplete(() => {print("YESSSSSSS")});
     apiService.getSetting()
         .then((value) => {
       if (value.messageId == 1)

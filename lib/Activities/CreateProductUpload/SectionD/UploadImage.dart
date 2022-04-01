@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jewelssky/Activities/CreateProductUpload/SectionA/createProductUpload.dart';
+import 'package:jewelssky/Activities/Home.dart';
 import 'package:jewelssky/HttpService/APIService.dart';
+import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,11 +23,12 @@ class UpLoadImage extends StatefulWidget {
   String cultId = "";
   String materialID = "";
   String shapeId = "";
+  String jobNo = "";
 
-  UpLoadImage(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, this.materialID, this.shapeId, {Key? key}) : super(key: key);
+  UpLoadImage(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, this.materialID, this.shapeId, this.jobNo, {Key? key}) : super(key: key);
 
   @override
-  _UpLoadImageState createState() => _UpLoadImageState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId);
+  _UpLoadImageState createState() => _UpLoadImageState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId, jobNo);
 }
 
 class _UpLoadImageState extends State<UpLoadImage> {
@@ -46,14 +50,25 @@ class _UpLoadImageState extends State<UpLoadImage> {
   String cultId = "";
   String materialID = "";
   String shapeId = "";
+  String jobNo = "";
   SharedPreferences? preferences;
 
-  _UpLoadImageState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, this.materialID, this.shapeId);
+  _UpLoadImageState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, this.materialID, this.shapeId, this.jobNo);
 
   Future getImage() async {
     final image = await ImagePicker.platform.pickImage(source: ImageSource.gallery);
     setState(() {
       imagee = image as File?;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initializePreference().whenComplete(() {
+      setState(() {
+        isLoading = false;
+      });
     });
   }
 
@@ -104,14 +119,27 @@ class _UpLoadImageState extends State<UpLoadImage> {
                     Expanded(
                       child: RaisedButton(
                         color: mUtis.backgroundColorr,
-                        onPressed: () {},
+                        onPressed: () {
+                          apiService.uploadImage(jobNo, preferences!.getString(mSharedPreference().userID).toString(), imagee!.uri).then((value) => {
+                                if (value.contains("Success"))
+                                  {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const Home(),
+                                        ))
+                                  }
+                                else
+                                  {mUtis.mToast('Enter User ID')}
+                              });
+                        },
                         child: Text(
-                          "Upload",
+                          "Upload & Save",
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),
-                    SizedBox(
+                    /*SizedBox(
                       width: 20,
                     ),
                     Expanded(
@@ -123,7 +151,7 @@ class _UpLoadImageState extends State<UpLoadImage> {
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
-                    )
+                    )*/
                   ],
                 ),
               ],
@@ -142,11 +170,15 @@ class _UpLoadImageState extends State<UpLoadImage> {
     );
     if (pickedFile != null) {
       setState(() {
-        imagee= File(pickedFile.path);
+        imagee = File(pickedFile.path);
         imageFile = File(pickedFile.path);
         print("image ");
         print(imageFile);
       });
     }
+  }
+
+  Future<void> initializePreference() async {
+    preferences = await SharedPreferences.getInstance();
   }
 }

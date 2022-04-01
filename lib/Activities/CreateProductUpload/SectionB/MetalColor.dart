@@ -19,11 +19,12 @@ class MetalColor extends StatefulWidget {
   String mwCollection = "";
   String cultNm = "";
   String cultId = "";
+  String dgno;String geniid;
 
-  MetalColor(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, {Key? key}) : super(key: key);
+  MetalColor(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.dgno,this.geniid, {Key? key}) : super(key: key);
 
   @override
-  _MetalColorState createState() => _MetalColorState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId);
+  _MetalColorState createState() => _MetalColorState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid);
 }
 
 class _MetalColorState extends State<MetalColor> {
@@ -40,12 +41,13 @@ class _MetalColorState extends State<MetalColor> {
   String scat = "";
   String cultNm = "";
   String cultId = "";
+  String dgno;String geniid;
 
   List<Data> collectionTypeList = [];
 
   SharedPreferences? preferences;
 
-  _MetalColorState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId);
+  _MetalColorState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.dgno,this.geniid);
 
   @override
   void initState() {
@@ -88,7 +90,7 @@ class _MetalColorState extends State<MetalColor> {
                             onTap: () => {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Weights(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                                MaterialPageRoute(builder: (context) => Weights(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid)),
                               ),
                             },
                             child: Card(

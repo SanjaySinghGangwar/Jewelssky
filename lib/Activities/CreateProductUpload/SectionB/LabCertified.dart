@@ -16,11 +16,12 @@ class LabCertified extends StatefulWidget {
   String mwCollection = "";
   String cultNm = "";
   String cultId = "";
+  String dgno;String geniid;
 
-   LabCertified(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,{Key? key}) : super(key: key);
+   LabCertified(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.dgno,this.geniid,{Key? key}) : super(key: key);
 
   @override
-  _LabCertifiedState createState() => _LabCertifiedState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId);
+  _LabCertifiedState createState() => _LabCertifiedState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid);
 }
 
 class _LabCertifiedState extends State<LabCertified> {
@@ -37,12 +38,13 @@ class _LabCertifiedState extends State<LabCertified> {
   String scat = "";
   String cultNm = "";
   String cultId = "";
+  String dgno;String geniid;
 
   List<Data> collectionTypeList = [];
 
   SharedPreferences? preferences;
 
-  _LabCertifiedState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId);
+  _LabCertifiedState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.dgno,this.geniid);
 
   @override
   void initState() {
@@ -87,7 +89,7 @@ class _LabCertifiedState extends State<LabCertified> {
                         onTap: () => {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => MFGType(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                            MaterialPageRoute(builder: (context) => MFGType(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid)),
                           ),
                         },
                         child: Card(
@@ -115,7 +117,7 @@ class _LabCertifiedState extends State<LabCertified> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => MFGType(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                            MaterialPageRoute(builder: (context) => MFGType(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid)),
                           );
                         },
                       ),

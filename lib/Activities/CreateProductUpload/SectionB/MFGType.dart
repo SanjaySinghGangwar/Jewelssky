@@ -17,11 +17,12 @@ class MFGType extends StatefulWidget {
   String mwCollection = "";
   String cultNm = "";
   String cultId = "";
+  String dgno;String geniid;
 
-  MFGType(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, {Key? key}) : super(key: key);
+  MFGType(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.dgno,this.geniid, {Key? key}) : super(key: key);
 
   @override
-  _MFGTypeState createState() => _MFGTypeState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId);
+  _MFGTypeState createState() => _MFGTypeState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid);
 }
 
 class _MFGTypeState extends State<MFGType> {
@@ -38,12 +39,12 @@ class _MFGTypeState extends State<MFGType> {
   String scat = "";
   String cultNm = "";
   String cultId = "";
-
+  String dgno;String geniid;
   List<Data> collectionTypeList = [];
 
   SharedPreferences? preferences;
 
-  _MFGTypeState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId);
+  _MFGTypeState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.dgno,this.geniid);
 
   @override
   void initState() {
@@ -88,7 +89,7 @@ class _MFGTypeState extends State<MFGType> {
                               onTap: () => {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => MaterialTypeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                                  MaterialPageRoute(builder: (context) => MaterialTypeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid)),
                                 ),
                               },
                               child: Card(
@@ -116,7 +117,7 @@ class _MFGTypeState extends State<MFGType> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => MaterialTypeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                                  MaterialPageRoute(builder: (context) => MaterialTypeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid)),
                                 );
                               },
                             ),

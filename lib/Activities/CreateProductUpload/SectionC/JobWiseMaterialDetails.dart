@@ -257,7 +257,7 @@ class _JobWiseMaterialDesignState extends State<JobWiseMaterialDesign> {
       isLoading = true;
     });
 
-    jobWiseMaterialDetailsRequest requestModel = jobWiseMaterialDetailsRequest(jobNo: "56200");
+    jobWiseMaterialDetailsRequest requestModel = jobWiseMaterialDetailsRequest(jobNo: jobNumber);
 
     apiService.jobWiseMaterialDetails(requestModel).whenComplete(() => {});
     apiService

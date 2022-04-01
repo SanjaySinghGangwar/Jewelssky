@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:jewelssky/Model/AddSpecification/AddSpecificationRequest.dart';
 import 'package:jewelssky/Model/AddSpecification/AddSpecificationResponse.dart';
@@ -204,6 +206,7 @@ class APIService {
       throw Exception('Failed to load data!');
     }
   }
+
   Future<QualityResponse> getQuality(QualityRequest requestModel) async {
     final response = await http.post(Uri.parse(mUtis().BaseURL + 'Material_Quality_Master'), body: requestModel.toJson());
     if (response.statusCode == 200 || response.statusCode == 400) {
@@ -214,6 +217,7 @@ class APIService {
       throw Exception('Failed to load data!');
     }
   }
+
   Future<ColorAResponse> getColor(ColorARequest requestModel) async {
     final response = await http.post(Uri.parse(mUtis().BaseURL + 'Material_Color_Master'), body: requestModel.toJson());
     if (response.statusCode == 200 || response.statusCode == 400) {
@@ -235,6 +239,7 @@ class APIService {
       throw Exception('Failed to load data!');
     }
   }
+
   Future<AddSpecificationResponse> AddSpecification(AddSpecificationRequest requestModel) async {
     final response = await http.post(Uri.parse(mUtis().BaseURL + 'Add_Specification'), body: requestModel.toJson());
     if (response.statusCode == 200 || response.statusCode == 400) {
@@ -252,6 +257,25 @@ class APIService {
       return jobWiseMaterialDetailsResponse.fromJson(
         json.decode(response.body),
       );
+    } else {
+      throw Exception('Failed to load data!');
+    }
+  }
+
+  Future<String> uploadImage(String job_no, String user_id, Uri image) async {
+    var request = http.MultipartRequest("POST", Uri.parse(mUtis().BaseURL + 'Upload_Image'));
+    request.fields["job_no"] = job_no;
+    request.fields["user_id"] = user_id;
+
+
+    request.files.add(http.MultipartFile('image',
+        File(image.path).readAsBytes().asStream(), File(image.path).lengthSync(),
+        filename: image.path.split("/").last));
+
+    var response = await request.send();
+    var responseData = await response.stream.toBytes();
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      return String.fromCharCodes(responseData);
     } else {
       throw Exception('Failed to load data!');
     }

@@ -4,8 +4,8 @@ import 'package:jewelssky/Common/Loader.dart';
 import 'package:jewelssky/HttpService/APIService.dart';
 import 'package:jewelssky/Model/MaterialType/MaterialTypeRequest.dart';
 import 'package:jewelssky/Model/MaterialType/MaterialTypeResponse.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MaterialTypeA extends StatefulWidget {
   String col = "";
@@ -18,11 +18,12 @@ class MaterialTypeA extends StatefulWidget {
   String mwCollection = "";
   String cultNm = "";
   String cultId = "";
+  String dgno;String geniid;
 
-  MaterialTypeA(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, {Key? key}) : super(key: key);
+  MaterialTypeA(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.dgno,this.geniid ,{Key? key}) : super(key: key);
 
   @override
-  _MaterialTypeAState createState() => _MaterialTypeAState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId);
+  _MaterialTypeAState createState() => _MaterialTypeAState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid);
 }
 
 class _MaterialTypeAState extends State<MaterialTypeA> {
@@ -39,12 +40,13 @@ class _MaterialTypeAState extends State<MaterialTypeA> {
   String scat = "";
   String cultNm = "";
   String cultId = "";
+  String dgno;String geniid;
 
   List<Data> collectionTypeList = [];
 
   SharedPreferences? preferences;
 
-  _MaterialTypeAState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId);
+  _MaterialTypeAState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.dgno,this.geniid);
 
   @override
   void initState() {
@@ -74,7 +76,7 @@ class _MaterialTypeAState extends State<MaterialTypeA> {
                       const SizedBox(
                         height: 20,
                       ),
-                       Text(
+                      Text(
                         "Material Type",
                         style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
                       ),
@@ -86,9 +88,9 @@ class _MaterialTypeAState extends State<MaterialTypeA> {
                           itemBuilder: (context, index) => InkWell(
                             onTap: () => {
                               Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Shape(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,collectionTypeList[index].materialId.toString())),
-                        ),
+                                context,
+                                MaterialPageRoute(builder: (context) => Shape(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, collectionTypeList[index].materialId.toString(),collectionTypeList[index].materialName.toString(),dgno,geniid)),
+                              ),
                             },
                             child: Card(
                                 child: Padding(
@@ -108,7 +110,7 @@ class _MaterialTypeAState extends State<MaterialTypeA> {
                         flex: 1,
                         child: TextButton(
                           style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                            foregroundColor: MaterialStateProperty.all<Color>(mUtis.backgroundColorr),
                           ),
                           onPressed: () {
                             Navigator.pop(context);
@@ -130,7 +132,7 @@ class _MaterialTypeAState extends State<MaterialTypeA> {
 
   void hitApi(String ptype) {
     setState(() {
-      isLoading=true;
+      isLoading = true;
     });
 
     MaterialTypeRequest request = MaterialTypeRequest(prodeId: ptype);

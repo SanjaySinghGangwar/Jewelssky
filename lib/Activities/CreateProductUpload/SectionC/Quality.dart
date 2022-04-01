@@ -23,11 +23,16 @@ class Quality extends StatefulWidget {
   String cultId = "";
   String materialID = "";
   String shapeId = "";
+  String materialSize = "";
+  String materialSizeID = "";
+  String shape = "";
+  String materialName = "";
+  String dgno;String geniid;
 
-   Quality(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.materialID,this.shapeId,{Key? key}) : super(key: key);
+   Quality(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.materialID,this.shapeId,this.materialSize,this.materialSizeID,this.shape,this.materialName,this.dgno,this.geniid,{Key? key}) : super(key: key);
 
   @override
-  _QualityState createState() => _QualityState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,materialID,shapeId);
+  _QualityState createState() => _QualityState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,materialID,shapeId,materialSize,materialSizeID,shape,materialName,dgno,geniid);
 }
 
 class _QualityState extends State<Quality> {
@@ -46,12 +51,17 @@ class _QualityState extends State<Quality> {
   String cultId = "";
   String materialID = "";
   String shapeId = "";
+  String materialSize = "";
+  String materialSizeID = "";
+  String shape = "";
+  String materialName = "";
+  String dgno;String geniid;
 
   List<Data> collectionTypeList = [];
 
   SharedPreferences? preferences;
 
-  _QualityState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.materialID,this.shapeId);
+  _QualityState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.materialID,this.shapeId,this.materialSize,this.materialSizeID,this.shape,this.materialName,this.dgno,this.geniid);
 
   @override
   void initState() {
@@ -94,7 +104,7 @@ class _QualityState extends State<Quality> {
                       onTap: () => {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ColorA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,materialID,shapeId)),
+                          MaterialPageRoute(builder: (context) => ColorA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,materialID,shapeId,materialSize,materialSizeID,shape,collectionTypeList[index].quality.toString(),collectionTypeList[index].matQtId.toString(),materialName,dgno,geniid)),
                         ),
                       },
                       child: Card(

@@ -14,11 +14,12 @@ class Weights extends StatefulWidget {
   String mwCollection = "";
   String cultNm = "";
   String cultId = "";
+  String dgno;String geniid;
 
-  Weights(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, {Key? key}) : super(key: key);
+  Weights(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, this.dgno,this.geniid,{Key? key}) : super(key: key);
 
   @override
-  _WeightsState createState() => _WeightsState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId);
+  _WeightsState createState() => _WeightsState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid);
 }
 
 class _WeightsState extends State<Weights> {
@@ -35,8 +36,9 @@ class _WeightsState extends State<Weights> {
   String scat = "";
   String cultNm = "";
   String cultId = "";
+  String dgno;String geniid;
 
-  _WeightsState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId);
+  _WeightsState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.dgno,this.geniid);
 
   TextEditingController GrossWeight = TextEditingController();
   TextEditingController NetWeight = TextEditingController();
@@ -149,7 +151,7 @@ class _WeightsState extends State<Weights> {
                       if (GrossWeight.text.toString().isNotEmpty) {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LabCertified(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                          MaterialPageRoute(builder: (context) => LabCertified(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid)),
                         );
                       } else {
                         mUtis.mToast("Enter Gross Weight");

@@ -119,29 +119,6 @@ class _RequiredOrderTimeState extends State<RequiredOrderTime> {
     }
   }
 
-  Widget _horizontalListView(List<String> mList) {
-    return SizedBox(
-      height: 100,
-      width: 230,
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: mList.length,
-        itemBuilder: (context, index) => InkWell(
-          onTap: () => {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Purity(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
-            ),
-          },
-          child: Card(
-              child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Text(mList[index]),
-          )),
-        ),
-      ),
-    );
-  }
 
   Future<void> initializePreference() async {
     preferences = await SharedPreferences.getInstance();
@@ -162,7 +139,7 @@ class _RequiredOrderTimeState extends State<RequiredOrderTime> {
                     preferences!.setString(mSharedPreference().design, value.design!);
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Purity(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId)),
+                      MaterialPageRoute(builder: (context) => Purity(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,value.job.toString(),value.design.toString())),
                     );
                     //isLoading = false;
                   })

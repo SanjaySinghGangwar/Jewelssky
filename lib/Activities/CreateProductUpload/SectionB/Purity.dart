@@ -94,6 +94,8 @@ class _PurityState extends State<Purity> {
                               ),
                             },
                             child: Card(
+                                elevation: 10,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                                 child: Padding(
                               padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
                               child: Column(

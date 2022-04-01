@@ -23,8 +23,8 @@ class Calculate extends StatefulWidget {
   String cultId = "";
   String materialID = "";
   String shapeId = "";
-  String settingName="";
-  String settingID="";
+  String settingName = "";
+  String settingID = "";
   String materialSize = "";
   String materialSizeID = "";
   String materialColorID = "";
@@ -33,11 +33,14 @@ class Calculate extends StatefulWidget {
   String quality = "";
   String qualityID = "";
   String materialName = "";
-  String dgno;String geniid;
-  Calculate(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, this.materialID, this.shapeId,this.settingID,this.settingName,this.materialSize,this.materialSizeID,this.materialColorID,this.materialColor,this.shape,this.quality,this.qualityID ,this.materialName,this.dgno,this.geniid,{Key? key}) : super(key: key);
+  String dgno;
+  String geniid;
+
+  Calculate(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, this.materialID, this.shapeId, this.settingID, this.settingName, this.materialSize, this.materialSizeID, this.materialColorID, this.materialColor, this.shape, this.quality, this.qualityID, this.materialName, this.dgno, this.geniid, {Key? key})
+      : super(key: key);
 
   @override
-  _CalculateState createState() => _CalculateState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId,settingID,settingName,materialSize,materialSizeID,materialColorID,materialColor,shape,quality,qualityID,materialName,dgno,geniid);
+  _CalculateState createState() => _CalculateState(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId, settingID, settingName, materialSize, materialSizeID, materialColorID, materialColor, shape, quality, qualityID, materialName, dgno, geniid);
 }
 
 class _CalculateState extends State<Calculate> {
@@ -56,8 +59,8 @@ class _CalculateState extends State<Calculate> {
   String cultId = "";
   String materialID = "";
   String shapeId = "";
-  String settingName="";
-  String settingID="";
+  String settingName = "";
+  String settingID = "";
   String materialSize = "";
   String materialSizeID = "";
   String materialColorID = "";
@@ -66,14 +69,16 @@ class _CalculateState extends State<Calculate> {
   String quality = "";
   String qualityID = "";
   String materialName = "";
-  String dgno;String geniid;
-
+  String dgno;
+  String geniid;
+  bool mFlag = true;
+  String jobNumber = "";
 
   List<Data> collectionTypeList = [];
 
   SharedPreferences? preferences;
 
-  _CalculateState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, this.materialID, this.shapeId,this.settingID,this.settingName,this.materialSize,this.materialSizeID,this.materialColorID,this.materialColor,this.shape,this.quality,this.qualityID,this.materialName,this.dgno,this.geniid);
+  _CalculateState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, this.materialID, this.shapeId, this.settingID, this.settingName, this.materialSize, this.materialSizeID, this.materialColorID, this.materialColor, this.shape, this.quality, this.qualityID, this.materialName, this.dgno, this.geniid);
 
   TextEditingController Pcs = TextEditingController();
   TextEditingController CtwController = TextEditingController();
@@ -219,6 +224,7 @@ class _CalculateState extends State<Calculate> {
                         height: 50,
                         padding: const EdgeInsets.fromLTRB(10, 0, 5, 0),
                         child: RaisedButton(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                           textColor: Colors.white,
                           color: mUtis.backgroundColorr,
                           child: const Text('ADD MORE'),
@@ -233,12 +239,12 @@ class _CalculateState extends State<Calculate> {
                         height: 50,
                         padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: RaisedButton(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                           textColor: Colors.white,
                           color: mUtis.backgroundColorr,
                           child: const Text('VIEW ALL'),
                           onPressed: () {
                             addDataToServer(2);
-
                           },
                         ),
                       ),
@@ -248,6 +254,7 @@ class _CalculateState extends State<Calculate> {
                         height: 50,
                         padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                         child: RaisedButton(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                           textColor: Colors.white,
                           color: mUtis.backgroundColorr,
                           child: const Text('SAVE'),
@@ -279,44 +286,78 @@ class _CalculateState extends State<Calculate> {
   }
 
   void addDataToServer(int flag) {
-   /* Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => UpLoadImage(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId)),
-    );*/
-
-
     setState(() {
-
       isLoading = true;
     });
-    AddSpecificationRequest request = AddSpecificationRequest(userId: preferences!.getString(mSharedPreference().userID), id: ptype, materialId: materialID, materialType: materialName, shape: shape, shapeId: shapeId, quality: quality, qualityId: qualityID, materialcolor: materialColor, materialcolorId: materialColorID, matsize: materialSize, matsizeId: materialSizeID, sett: settingID, settNm: settingName, pcs: Pcs.text.toString(), ctw: CtwController.text.toString(), pointer: Pointer.text.toString(), rate: RateController.text.toString(), dgno: dgno, geniid: geniid);
-    apiService.AddSpecification(request)
-        .then((value) => {
-              if (value.messageId == 1)
-                {
-                  setState(() {
-                    isLoading = false;
-                    if (flag==1) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => MaterialTypeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid)),
-                      );
-
-                    }else if(flag==2){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => JobWiseMaterialDesign(value.msg.toString())),
-                      );
-                    } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => UpLoadImage(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId,value.msg.toString())),
-                      );
-                    }
-                  })
-                }
-            })
-        .onError((error, stackTrace) => {});
+    if (mFlag) {
+      AddSpecificationRequest request = AddSpecificationRequest(
+          userId: preferences!.getString(mSharedPreference().userID),
+          id: ptype,
+          materialId: materialID,
+          materialType: materialName,
+          shape: shape,
+          shapeId: shapeId,
+          quality: quality,
+          qualityId: qualityID,
+          materialcolor: materialColor,
+          materialcolorId: materialColorID,
+          matsize: materialSize,
+          matsizeId: materialSizeID,
+          sett: settingID,
+          settNm: settingName,
+          pcs: Pcs.text.toString(),
+          ctw: CtwController.text.toString(),
+          pointer: Pointer.text.toString(),
+          rate: RateController.text.toString(),
+          dgno: dgno,
+          geniid: geniid);
+      apiService.AddSpecification(request)
+          .then((value) => {
+                if (value.messageId == 1)
+                  {
+                    setState(() {
+                      jobNumber=value.msg.toString();
+                      isLoading = false;
+                      if (flag == 1) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MaterialTypeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, dgno, geniid)),
+                        );
+                      } else if (flag == 2) {
+                        mFlag = false;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => JobWiseMaterialDesign(jobNumber)),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => UpLoadImage(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId, jobNumber)),
+                        );
+                      }
+                    })
+                  }
+              })
+          .onError((error, stackTrace) => {});
+    } else {
+      if (flag == 1) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MaterialTypeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, dgno, geniid)),
+        );
+      } else if (flag == 2) {
+        mFlag = false;
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => JobWiseMaterialDesign(jobNumber)),
+        );
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => UpLoadImage(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId, jobNumber)),
+        );
+      }
+    }
   }
 
   getTotalValue(String ctwValue, String ratee) {
@@ -339,6 +380,7 @@ class _CalculateState extends State<Calculate> {
     }
     return Pointer;
   }
+
   Future<void> initializePreference() async {
     preferences = await SharedPreferences.getInstance();
   }

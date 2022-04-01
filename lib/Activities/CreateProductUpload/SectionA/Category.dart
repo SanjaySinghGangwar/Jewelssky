@@ -80,9 +80,11 @@ class _CategoryState extends State<Category> {
                               ),
                             },
                             child: Card(
+                                elevation: 10,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                                 child: Padding(
                               padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-                              child: Text(categoryList[index].categoryName!),
+                              child: Text(categoryList[index].categoryName!,style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                             )),
                           ),
                         ),

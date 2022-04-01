@@ -89,9 +89,11 @@ class _RequiredOrderTimeState extends State<RequiredOrderTime> {
                       itemBuilder: (context, index) => InkWell(
                         onTap: () => {hitApi(list[index].value!)},
                         child: Card(
+                            elevation: 10,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                             child: Padding(
                           padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-                          child: Text(list[index].name!),
+                          child: Text(list[index].name!,style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                         )),
                       ),
                     ),

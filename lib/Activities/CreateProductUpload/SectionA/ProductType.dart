@@ -79,9 +79,11 @@ class _productTypeState extends State<productType> {
                               ),
                             },
                             child: Card(
+                                elevation: 10,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                                 child: Padding(
                               padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-                              child: Text(productTypeList[index].proEname!),
+                              child: Text(productTypeList[index].proEname!,style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                             )),
                           ),
                         ),

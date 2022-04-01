@@ -45,6 +45,8 @@ class _HomeState extends State<Home> {
                         Provider.of<AppModel>(context, listen: false).updateTitle("NEW PRODUCT UPLOAD");
                       },
                       child: Card(
+                        elevation: 20,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                           child: Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Column(

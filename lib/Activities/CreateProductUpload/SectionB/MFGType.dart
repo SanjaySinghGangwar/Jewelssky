@@ -93,48 +93,57 @@ class _MFGTypeState extends State<MFGType> {
                                 ),
                               },
                               child: Card(
+                                  elevation: 10,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                                   child: Padding(
                                 padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(collectionTypeList[index].mkTypeName.toString()),
+                                    Text(collectionTypeList[index].mkTypeName.toString(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                                   ],
                                 ),
                               )),
                             ),
                           ),
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 4.0),
-                            child: RaisedButton(
-                              textColor: Colors.white,
-                              color: mUtis.backgroundColorr,
-                              child: const Text('SKIP'),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => MaterialTypeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid)),
-                                );
-                              },
+                        Row(
+                          children: [
+
+                            Expanded(
+                              flex: 1,
+                              child: TextButton(
+                                style: ButtonStyle(
+                                  foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('BACK'),
+                              ),
                             ),
-                          ),
+                            Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 4.0),
+                                child: RaisedButton(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                                  textColor: Colors.white,
+                                  color: mUtis.backgroundColorr,
+                                  child: const Text('SKIP'),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => MaterialTypeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid)),
+                                    );
+                                  },
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: TextButton(
-                            style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text('BACK'),
-                          ),
-                        )
+
                       ],
                     ),
                   ),

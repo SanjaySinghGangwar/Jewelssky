@@ -52,9 +52,9 @@ class _CreateProductUploadState extends State<CreateProductUpload> {
                   const SizedBox(
                     height: 60,
                   ),
-                   Text(
+                  Text(
                     "Stock Type",
-                     style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
+                    style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
                   ),
                   const SizedBox(
                     height: 10,
@@ -65,7 +65,7 @@ class _CreateProductUploadState extends State<CreateProductUpload> {
                   ),
                   Text(
                     "Enter HUID (Optional)",
-                    style: TextStyle(color: mUtis.backgroundColorr,fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(color: mUtis.backgroundColorr, fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 10,
@@ -109,10 +109,12 @@ class _CreateProductUploadState extends State<CreateProductUpload> {
             ),
           },
           child: Card(
+              elevation: 10,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
               child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Text(mList[index].name!),
-          )),
+                padding: const EdgeInsets.all(12.0),
+                child: Text(mList[index].name!,style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+              )),
         ),
       ),
     );

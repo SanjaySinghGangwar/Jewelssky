@@ -140,36 +140,41 @@ class _WeightsState extends State<Weights> {
                 const SizedBox(
                   height: 20,
                 ),*/
-                Container(
-                  height: 50,
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: RaisedButton(
-                    textColor: Colors.white,
-                    color: mUtis.backgroundColorr,
-                    child: const Text('Next'),
-                    onPressed: () {
-                      if (GrossWeight.text.toString().isNotEmpty) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => LabCertified(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid)),
-                        );
-                      } else {
-                        mUtis.mToast("Enter Gross Weight");
-                      }
-                    },
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextButton(
-                    style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(mUtis.backgroundColorr),
+
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: TextButton(
+                        style: ButtonStyle(
+                          foregroundColor: MaterialStateProperty.all<Color>(mUtis.backgroundColorr),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('BACK'),
+                      ),
                     ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text('BACK'),
-                  ),
+                    Expanded(
+                      flex: 1,
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                        textColor: Colors.white,
+                        color: mUtis.backgroundColorr,
+                        child: const Text('Next'),
+                        onPressed: () {
+                          if (GrossWeight.text.toString().isNotEmpty) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => LabCertified(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid)),
+                            );
+                          } else {
+                            mUtis.mToast("Enter Gross Weight");
+                          }
+                        },
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),

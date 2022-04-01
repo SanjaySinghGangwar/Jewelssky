@@ -93,47 +93,55 @@ class _LabCertifiedState extends State<LabCertified> {
                           ),
                         },
                         child: Card(
+                            elevation: 10,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                             child: Padding(
                               padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(collectionTypeList[index].certiName.toString()),
+                                  Text(collectionTypeList[index].certiName.toString(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
                                 ],
                               ),
                             )),
                       ),
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 4.0),
-                      child: RaisedButton(
-                        textColor: Colors.white,
-                        color: mUtis.backgroundColorr,
-                        child: const Text('SKIP'),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => MFGType(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid)),
-                          );
-                        },
+
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: TextButton(
+                          style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('BACK'),
+                        ),
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: TextButton(
-                      style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text('BACK'),
-                    ),
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 4.0),
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                            textColor: Colors.white,
+                            color: mUtis.backgroundColorr,
+                            child: const Text('SKIP'),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => MFGType(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,dgno,geniid)),
+                              );
+                            },
+                          ),
+                        ),
+                      )
+                    ],
                   )
                 ],
               ),

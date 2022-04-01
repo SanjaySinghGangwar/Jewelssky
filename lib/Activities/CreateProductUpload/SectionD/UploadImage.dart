@@ -118,6 +118,7 @@ class _UpLoadImageState extends State<UpLoadImage> {
                   children: [
                     Expanded(
                       child: RaisedButton(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                         color: mUtis.backgroundColorr,
                         onPressed: () {
                           apiService.uploadImage(jobNo, preferences!.getString(mSharedPreference().userID).toString(), imagee!.uri).then((value) => {

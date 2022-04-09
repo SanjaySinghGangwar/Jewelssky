@@ -22,8 +22,8 @@ class _SplashScreenState extends State<SplashScreen> {
   var isLoading = false;
 
   @override
-  void initState() {
-    FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
+
     super.initState();
     if (Platform.isAndroid) {
       android = true;

@@ -4,6 +4,7 @@ import 'package:jewelssky/HttpService/APIService.dart';
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fullscreen/fullscreen.dart';
 
 class Weights extends StatefulWidget {
   String col = "";
@@ -84,7 +85,7 @@ class _WeightsState extends State<Weights> {
   TextEditingController WastageAmt = TextEditingController();
 
   @override
-  void initState() {
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
     initializePreference().whenComplete(() {
       setState(() {});

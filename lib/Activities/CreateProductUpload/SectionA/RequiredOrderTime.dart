@@ -8,6 +8,7 @@ import 'package:jewelssky/Model/SaveDesignSetFirst/SaveDesignSetFirstRequest.dar
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
+import 'package:fullscreen/fullscreen.dart';
 
 class RequiredOrderTime extends StatefulWidget {
   String col = "";
@@ -49,7 +50,7 @@ class _RequiredOrderTimeState extends State<RequiredOrderTime> {
   _RequiredOrderTimeState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId);
 
   @override
-  void initState() {
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
     addDataToList();
     initializePreference().whenComplete(() {

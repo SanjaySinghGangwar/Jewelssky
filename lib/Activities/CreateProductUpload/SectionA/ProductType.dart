@@ -8,6 +8,7 @@ import 'package:jewelssky/Model/ProductType/ProductTypeResponse.dart';
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fullscreen/fullscreen.dart';
 
 class productType extends StatefulWidget {
   String stockType = "";
@@ -31,7 +32,7 @@ class _productTypeState extends State<productType> {
   _productTypeState(this.stockType, this.huid);
 
   @override
-  void initState() {
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
     initializePreference().whenComplete(() {
       setState(() {

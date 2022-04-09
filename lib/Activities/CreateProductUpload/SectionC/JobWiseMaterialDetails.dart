@@ -7,7 +7,7 @@ import 'package:jewelssky/Model/jobWiseMaterialDetails/jobWiseMaterialDetailsRes
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:fullscreen/fullscreen.dart';
 class JobWiseMaterialDesign extends StatefulWidget {
   String jobNumber = "";
 
@@ -28,7 +28,7 @@ class _JobWiseMaterialDesignState extends State<JobWiseMaterialDesign> {
   _JobWiseMaterialDesignState(this.jobNumber);
 
   @override
-  void initState() {
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
     initializePreference().whenComplete(() {
       setState(() {

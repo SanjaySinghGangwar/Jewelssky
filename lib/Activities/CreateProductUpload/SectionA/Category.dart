@@ -6,6 +6,7 @@ import 'package:jewelssky/Model/Category/CategortRequest.dart';
 import 'package:jewelssky/Model/Category/CategoryResponse.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
+import 'package:fullscreen/fullscreen.dart';
 
 class Category extends StatefulWidget {
   String collection = "";
@@ -34,7 +35,7 @@ class _CategoryState extends State<Category> {
   _CategoryState(this.stockType, this.HUID, this.ptype, this.collection);
 
   @override
-  void initState() {
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
     initializePreference().whenComplete(() {
       setState(() {

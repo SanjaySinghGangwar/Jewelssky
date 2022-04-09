@@ -9,6 +9,7 @@ import 'package:jewelssky/Model/SizeA/SizeARequest.dart';
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
+import 'package:fullscreen/fullscreen.dart';
 
 
 class SizeA extends StatefulWidget {
@@ -61,7 +62,7 @@ class _SizeAState extends State<SizeA> {
   _SizeAState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.materialID,this.shapeId,this.shape,this.materialName,this.dgno,this.geniid);
 
   @override
-  void initState() {
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
     print("YES" + ptype);
     initializePreference().whenComplete(() {

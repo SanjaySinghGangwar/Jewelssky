@@ -10,6 +10,7 @@ import 'package:jewelssky/Utils/AppModel.dart';
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
 import 'package:provider/provider.dart';
+import 'package:fullscreen/fullscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
@@ -30,7 +31,7 @@ class _LoginState extends State<Login> {
   SharedPreferences? preferences;
 
   @override
-  void initState() {
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
     initializePreference().whenComplete(() {
       setState(() {

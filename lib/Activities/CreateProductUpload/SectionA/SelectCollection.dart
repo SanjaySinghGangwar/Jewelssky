@@ -8,7 +8,7 @@ import 'package:jewelssky/Model/SelectCollection/SelectCollectionRequest.dart';
 import 'package:jewelssky/Model/SelectCollection/SelectCollectionResponse.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
-
+import 'package:fullscreen/fullscreen.dart';
 class SelectCollection extends StatefulWidget {
   String ptype = "";
   String stockType = "";
@@ -34,7 +34,7 @@ class _SelectCollectionState extends State<SelectCollection> {
   _SelectCollectionState(this.ptype, this.HUID, this.stockType);
 
   @override
-  void initState() {
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
     print("YES" + ptype);
     initializePreference().whenComplete(() {

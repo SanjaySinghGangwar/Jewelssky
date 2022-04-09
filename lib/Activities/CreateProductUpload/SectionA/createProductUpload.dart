@@ -6,6 +6,7 @@ import 'package:jewelssky/Model/StockType/StockType.dart';
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fullscreen/fullscreen.dart';
 
 class CreateProductUpload extends StatefulWidget {
   const CreateProductUpload({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class _CreateProductUploadState extends State<CreateProductUpload> {
   TextEditingController HUID = TextEditingController();
 
   @override
-  void initState() {
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
     addDataToList();
     initializePreference().whenComplete(() {

@@ -7,6 +7,7 @@ import 'package:jewelssky/Model/SaveMetalSetSecond/SaveMetalSetSecondRequest.dar
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fullscreen/fullscreen.dart';
 
 class MFGType extends StatefulWidget {
   String col = "";
@@ -85,7 +86,7 @@ class _MFGTypeState extends State<MFGType> {
   _MFGTypeState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId, this.dgno, this.geniid,this.GrossWeight,this.NetWeight,this.WasteWeight,this.purityID,this.purityDT,this.purity,this.labCerti,this.matcol,this.mtid,this.Mat_Code);
 
   @override
-  void initState() {
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
     print("YES" + ptype);
     initializePreference().whenComplete(() {

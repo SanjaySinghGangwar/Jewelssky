@@ -11,6 +11,7 @@ import 'package:jewelssky/Utils/mUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:jewelssky/Utils/AppModel.dart';
+import 'package:fullscreen/fullscreen.dart';
 
 class UpLoadImage extends StatefulWidget {
   String col = "";
@@ -65,7 +66,7 @@ class _UpLoadImageState extends State<UpLoadImage> {
   }
 
   @override
-  void initState() {
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
     initializePreference().whenComplete(() {
       setState(() {

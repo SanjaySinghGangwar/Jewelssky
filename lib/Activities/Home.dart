@@ -5,6 +5,7 @@ import 'package:jewelssky/Utils/AppModel.dart';
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fullscreen/fullscreen.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class _HomeState extends State<Home> {
   SharedPreferences? preferences;
 
   @override
-  void initState() {
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
     initializePreference().whenComplete(() {
       setState(() {
@@ -34,117 +35,131 @@ class _HomeState extends State<Home> {
         ? MaterialApp(
             debugShowCheckedModeBanner: false,
             home: Scaffold(
-              body: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Provider.of<AppModel>(context, listen: false).updateTitle("NEW PRODUCT UPLOAD");
-                        setState(() {
+              body: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Provider.of<AppModel>(context, listen: false).updateTitle("NEW PRODUCT UPLOAD");
+                          setState(() {
 
-                        });
-                      },
-                      child: Card(
-                          elevation: 20,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 100,
-                                  height: 100,
-                                  child: Image.asset(
-                                    "assets/box.png",
-                                    fit: BoxFit.cover,
+                          });
+                        },
+                        child: Card(
+                            elevation: 20,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 100,
+                                    height: 100,
+                                    child: Image.asset(
+                                      "assets/box.png",
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                ),
-                                const Text('New Product Upload'),
-                              ],
-                            ),
-                          )),
-                    ),
-                    /*InkWell(
-                      onTap: () {
-                        Provider.of<AppModel>(context, listen: false).updateTitle("NEW COLLECTION NAME");
+                                  const Text('New Product Upload'),
+                                ],
+                              ),
+                            )),
+                      ),
+                      /*InkWell(
+                        onTap: () {
+                          Provider.of<AppModel>(context, listen: false).updateTitle("NEW COLLECTION NAME");
 
-                      },
-                      child: Card(
-                          elevation: 20,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 100,
-                                  height: 100,
-                                  child: Image.asset(
-                                    "assets/box.png",
-                                    fit: BoxFit.cover,
+                        },
+                        child: Card(
+                            elevation: 20,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 100,
+                                    height: 100,
+                                    child: Image.asset(
+                                      "assets/box.png",
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                ),
-                                const Text('New Collection name'),
-                              ],
-                            ),
-                          )),
-                    ),*/
-                    InkWell(
-                      onTap: () {
-                        Provider.of<AppModel>(context, listen: false).updateTitle("READY STOCK");
-                        setState(() {
+                                  const Text('New Collection name'),
+                                ],
+                              ),
+                            )),
+                      ),*/
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: InkWell(
+                              onTap: () {
+                                Provider.of<AppModel>(context, listen: false).updateTitle("READY STOCK");
+                                setState(() {
 
-                        });
-                      },
-                      child: Card(
-                          elevation: 20,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 100,
-                                  height: 100,
-                                  child: Image.asset(
-                                    "assets/box.png",
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                const Text('Ready Stock'),
-                              ],
+                                });
+                              },
+                              child: Card(
+                                  elevation: 20,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 100,
+                                          height: 100,
+                                          child: Image.asset(
+                                            "assets/ready.png",
+                                            fit: BoxFit.contain,
+                                          ),
+                                        ),
+                                        const Text('Ready Stock'),
+                                      ],
+                                    ),
+                                  )),
                             ),
-                          )),
-                    ),InkWell(
-                      onTap: () {
-                        Provider.of<AppModel>(context, listen: false).updateTitle("ORDER STOCK");
-                        setState(() {
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: InkWell(
+                              onTap: () {
+                                Provider.of<AppModel>(context, listen: false).updateTitle("ORDER STOCK");
+                                setState(() {
 
-                        });
-                      },
-                      child: Card(
-                          elevation: 20,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 100,
-                                  height: 100,
-                                  child: Image.asset(
-                                    "assets/box.png",
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                const Text('Order Stock'),
-                              ],
+                                });
+                              },
+                              child: Card(
+                                  elevation: 20,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 100,
+                                          height: 100,
+                                          child: Image.asset(
+                                            "assets/order.png",
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        const Text('Order Stock'),
+                                      ],
+                                    ),
+                                  )),
                             ),
-                          )),
-                    ),
-                  ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

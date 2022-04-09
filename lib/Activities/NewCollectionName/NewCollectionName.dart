@@ -6,7 +6,7 @@ import 'package:jewelssky/Model/getVendorUserCollection/getVendorUserCollectionR
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:fullscreen/fullscreen.dart';
 class NewCollectionName extends StatefulWidget {
   const NewCollectionName({Key? key}) : super(key: key);
 
@@ -24,7 +24,7 @@ class _NewCollectionNameState extends State<NewCollectionName> {
   SharedPreferences? preferences;
 
   @override
-  void initState() {
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
 
     initializePreference().whenComplete(() {

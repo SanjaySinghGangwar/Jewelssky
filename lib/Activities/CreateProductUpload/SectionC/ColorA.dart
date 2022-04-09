@@ -11,7 +11,7 @@ import 'package:jewelssky/Model/SizeA/SizeARequest.dart';
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
-
+import 'package:fullscreen/fullscreen.dart';
 class ColorA extends StatefulWidget {
   String col = "";
   String cat = "";
@@ -70,7 +70,7 @@ class _ColorAState extends State<ColorA> {
   _ColorAState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.materialID,this.shapeId,this.materialSize,this.materialSizeID,this.shape,this.quality,this.qualityID,this.materialName,this.dgno,this.geniid);
 
   @override
-  void initState() {
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
     print("YES" + ptype);
     initializePreference().whenComplete(() {

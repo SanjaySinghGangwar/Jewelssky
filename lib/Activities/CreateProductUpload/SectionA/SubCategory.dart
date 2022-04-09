@@ -6,6 +6,7 @@ import 'package:jewelssky/Model/SubCategory/SubCategoryRequest.dart';
 import 'package:jewelssky/Model/SubCategory/SubCategoryResponse.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fullscreen/fullscreen.dart';
 
 class SubCategory extends StatefulWidget {
   String col = "";
@@ -38,7 +39,7 @@ class _SubCategoryState extends State<SubCategory> {
   _SubCategoryState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat);
 
   @override
-  void initState() {
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
     initializePreference().whenComplete(() {
       setState(() {

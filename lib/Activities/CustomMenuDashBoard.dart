@@ -6,6 +6,7 @@ import 'package:jewelssky/Utils/AppModel.dart';
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
 import 'package:provider/provider.dart';
+import 'package:fullscreen/fullscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'WebHome.dart';
@@ -46,7 +47,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
   SharedPreferences? preferences;
 
   @override
-  void initState() {
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
     initializePreference().whenComplete(() {
       setState(() {
@@ -82,8 +83,8 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                 children: <Widget>[
                   menuItem("HOME", Icons.home, context, widget),
                   menuItem("NEW PRODUCT UPLOAD", Icons.ac_unit_rounded, context, widget),
-                  menuItem("READY STOCK", Icons.favorite, context, widget),
-                  menuItem("ORDER STOCK", Icons.favorite, context, widget),
+                  menuItem("READY STOCK", Icons.timeline_rounded, context, widget),
+                  menuItem("ORDER STOCK", Icons.stream, context, widget),
                   islogin ? menuItem("LOGOUT", Icons.person, context, widget) : menuItem("LOG IN", Icons.person, context, widget),
                 ],
               ),

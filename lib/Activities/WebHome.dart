@@ -35,7 +35,7 @@ class _WebHomeState extends State<WebHome> {
   TextEditingController confirmPasswordController = TextEditingController();
 
   @override
-  void initState() {
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
     FullScreen.exitFullScreen();
     initializePreference().whenComplete(() {

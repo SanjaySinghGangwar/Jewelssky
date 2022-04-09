@@ -8,6 +8,7 @@ import 'package:jewelssky/Model/MetalColor/MetalColorResponse.dart';
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
+import 'package:fullscreen/fullscreen.dart';
 
 class MetalColor extends StatefulWidget {
   String col = "";
@@ -63,7 +64,7 @@ class _MetalColorState extends State<MetalColor> {
   _MetalColorState(this.stockType, this.HUID, this.ptype, this.collection, this.col, this.cat, this.mwCollection, this.scat, this.cultNm, this.cultId,this.dgno,this.geniid,this.purityID,this.purityDT,this.purity,this.mtid,this.Mat_Code);
 
   @override
-  void initState() {
+  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
     print("YES" + ptype);
     initializePreference().whenComplete(() {

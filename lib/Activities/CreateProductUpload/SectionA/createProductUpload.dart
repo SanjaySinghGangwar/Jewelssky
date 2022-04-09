@@ -36,54 +36,63 @@ class _CreateProductUploadState extends State<CreateProductUpload> {
   @override
   Widget build(BuildContext context) {
     if (islogin) {
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Container(
-            constraints: const BoxConstraints.expand(),
-            decoration: const BoxDecoration(
-              image: DecorationImage(image: AssetImage("assets/icon.png"), fit: BoxFit.fitWidth, opacity: 220),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView(
-                children: <Widget>[
-                  const SizedBox(
-                    height: 60,
-                  ),
-                  Text(
-                    "Stock Type",
-                    style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  _horizontalListView(list),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Enter HUID (Optional)",
-                    style: TextStyle(color: mUtis.backgroundColorr, fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                    child: TextField(
-                      controller: HUID,
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        labelText: 'Enter HUID',
-                        fillColor: mUtis.backgroundColorr,
-                        hoverColor: mUtis.backgroundColorr,
-                        focusColor: mUtis.backgroundColorr,
+      return WillPopScope(
+        onWillPop: () async {
+          // You can do some work here.
+          // Returning true allows the pop to happen, returning false prevents it.
+          return false;
+        },
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: Container(
+              constraints: const BoxConstraints.expand(),
+              decoration: const BoxDecoration(
+                image: DecorationImage(image: AssetImage("assets/icon.png"), fit: BoxFit.fitWidth, opacity: 220),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView(
+                  children: <Widget>[
+                    const SizedBox(
+                      height: 60,
+                    ),
+                    Text(
+                      "Enter HUID (Optional)",
+                      style: TextStyle(color: mUtis.backgroundColorr, fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: TextField(
+                        controller: HUID,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: 'Enter HUID',
+                          fillColor: mUtis.backgroundColorr,
+                          hoverColor: mUtis.backgroundColorr,
+                          focusColor: mUtis.backgroundColorr,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(height: 20,),
+                    Text(
+                      "Stock Type",
+                      style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    _horizontalListView(list),
+                    const SizedBox(
+                      height: 20,
+                    ),
+
+                  ],
+                ),
               ),
             ),
           ),

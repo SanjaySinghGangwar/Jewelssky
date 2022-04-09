@@ -132,13 +132,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
-  flutter_restart:
-    dependency: "direct dev"
-    description:
-      name: flutter_restart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.3"
   flutter_spinkit:
     dependency: "direct dev"
     description:

@@ -4,6 +4,8 @@ import 'package:fullscreen/fullscreen.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
 import 'package:jewelssky/Activities/CreateProductUpload/SectionA/createProductUpload.dart';
 import 'package:jewelssky/Activities/LoginScreen.dart';
+import 'package:jewelssky/Activities/OrderStock/OrderStock.dart';
+import 'package:jewelssky/Activities/ReadyStock/ReadyStock.dart';
 import 'package:jewelssky/Common/Loader.dart';
 import 'package:jewelssky/Utils/AppModel.dart';
 import 'package:jewelssky/Utils/mSharedPreference.dart';
@@ -12,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Home.dart';
+import 'NewCollectionName/NewCollectionName.dart';
 
 class WebHome extends StatefulWidget {
   @override
@@ -87,6 +90,9 @@ class _WebHomeState extends State<WebHome> {
       case "HOME":
         widget = isLogin ? const Home() : const Login();
         break;
+      case "NEW COLLECTION NAME":
+        widget = isLogin ? const NewCollectionName() : const Login();
+        break;
       case "NEW PRODUCT UPLOAD":
         widget = isLogin ? const CreateProductUpload() : const Login();
         break;
@@ -97,6 +103,11 @@ class _WebHomeState extends State<WebHome> {
       case "LOG IN":
         preferences?.clear();
         widget = const Login();
+        break;
+      case "READY STOCK":
+        widget = isLogin ? const ReadyStock() : const Login();
+        break;case "ORDER STOCK":
+        widget = isLogin ? const OrderStock() : const Login();
         break;
       default:
         widget = const Home();

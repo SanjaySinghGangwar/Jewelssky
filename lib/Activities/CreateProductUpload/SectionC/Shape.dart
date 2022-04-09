@@ -5,6 +5,7 @@ import 'package:jewelssky/HttpService/APIService.dart';
 import 'package:jewelssky/Model/Shape/ShapeResponse.dart';
 
 import 'package:jewelssky/Model/Shape/ShapeRequest.dart';
+import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
 
@@ -65,68 +66,84 @@ class _ShapeState extends State<Shape> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: isLoading
-          ? Loader()
-          : Scaffold(
-        body: Container(
-          constraints: const BoxConstraints.expand(),
-          decoration: const BoxDecoration(
-            image: DecorationImage(image: AssetImage("assets/icon.png"), fit: BoxFit.fitWidth, opacity: 220),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                 Text(
-                  "Shape",
-                   style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
-                ),
-                Expanded(
-                  flex: 9,
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    itemCount: collectionTypeList.length,
-                    itemBuilder: (context, index) => InkWell(
-                      onTap: () => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SizeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,materialID,collectionTypeList[index].shapeId.toString(),collectionTypeList[index].shape.toString(),materialName,dgno,geniid)),
-                        ),
+    return WillPopScope(
+      onWillPop: () async {
+        // You can do some work here.
+        // Returning true allows the pop to happen, returning false prevents it.
+        return false;
+      },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: isLoading
+            ? Loader()
+            : Scaffold(
+          body: Container(
+            constraints: const BoxConstraints.expand(),
+            decoration: const BoxDecoration(
+              image: DecorationImage(image: AssetImage("assets/icon.png"), fit: BoxFit.fitWidth, opacity: 220),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  preferences != null
+                      ? Text(
+                    "Design : " + preferences!.getString(mSharedPreference().design).toString() + "  Job : " + preferences!.getString(mSharedPreference().jobNumber).toString(),
+                    textAlign: TextAlign.center,
+                  )
+                      : const SizedBox(
+                    height: 0,
+                    width: 0,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                   Text(
+                    "Shape",
+                     style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
+                  ),
+                  Expanded(
+                    flex: 9,
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: collectionTypeList.length,
+                      itemBuilder: (context, index) => InkWell(
+                        onTap: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SizeA(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId,materialID,collectionTypeList[index].shapeId.toString(),collectionTypeList[index].shape.toString(),materialName,dgno,geniid)),
+                          ),
+                        },
+                        child: Card(
+                            elevation: 10,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(collectionTypeList[index].shape.toString(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                                ],
+                              ),
+                            )),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: TextButton(
+                      style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
                       },
-                      child: Card(
-                          elevation: 10,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(collectionTypeList[index].shape.toString(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-                              ],
-                            ),
-                          )),
+                      child: Text('BACK'),
                     ),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: TextButton(
-                    style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text('BACK'),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

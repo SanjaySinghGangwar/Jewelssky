@@ -104,180 +104,196 @@ class _CalculateState extends State<Calculate> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: mUtis.backgroundColorr,
-      ),
-      home: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          constraints: const BoxConstraints.expand(),
-          decoration: const BoxDecoration(
-            image: DecorationImage(image: AssetImage("assets/icon.png"), fit: BoxFit.fitWidth, opacity: 220),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: ListView(
-              children: <Widget>[
-                const SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: const EdgeInsets.all(10),
-                  child: Text(
-                    "Material Specification",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
+    return WillPopScope(
+      onWillPop: () async {
+        // You can do some work here.
+        // Returning true allows the pop to happen, returning false prevents it.
+        return false;
+      },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primaryColor: mUtis.backgroundColorr,
+        ),
+        home: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Container(
+            constraints: const BoxConstraints.expand(),
+            decoration: const BoxDecoration(
+              image: DecorationImage(image: AssetImage("assets/icon.png"), fit: BoxFit.fitWidth, opacity: 220),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10,right: 10),
+              child: ListView(
+                children: <Widget>[
+                  preferences != null
+                      ? Text(
+                    "Design : " + preferences!.getString(mSharedPreference().design).toString() + "  Job : " + preferences!.getString(mSharedPreference().jobNumber).toString(),
+                    textAlign: TextAlign.center,
+                  )
+                      : const SizedBox(
+                    height: 0,
+                    width: 0,
                   ),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  child: TextField(
-                    controller: Pcs,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      labelText: 'Pcs',
-                      fillColor: mUtis.backgroundColorr,
-                      hoverColor: mUtis.backgroundColorr,
-                      focusColor: mUtis.backgroundColorr,
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      "Material Specification",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
                     ),
                   ),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    controller: CtwController,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      labelText: 'Ctw',
-                      fillColor: mUtis.backgroundColorr,
-                      hoverColor: mUtis.backgroundColorr,
-                      focusColor: mUtis.backgroundColorr,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    controller: RateController,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      labelText: 'Rate',
-                      fillColor: mUtis.backgroundColorr,
-                      hoverColor: mUtis.backgroundColorr,
-                      focusColor: mUtis.backgroundColorr,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: TextField(
-                    readOnly: true,
-                    enabled: false,
-                    keyboardType: TextInputType.number,
-                    controller: calculatePointer(Pcs.text.toString(), CtwController.text.toString()),
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      labelText: 'Pointer',
-                      fillColor: mUtis.backgroundColorr,
-                      hoverColor: mUtis.backgroundColorr,
-                      focusColor: mUtis.backgroundColorr,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: TextField(
-                    readOnly: true,
-                    enabled: false,
-                    keyboardType: TextInputType.number,
-                    controller: getTotalValue(CtwController.text.toString(), RateController.text.toString()),
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      labelText: 'Total Value',
-                      fillColor: mUtis.backgroundColorr,
-                      hoverColor: mUtis.backgroundColorr,
-                      focusColor: mUtis.backgroundColorr,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 50,
-                        padding: const EdgeInsets.fromLTRB(10, 0, 5, 0),
-                        child: RaisedButton(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                          textColor: Colors.white,
-                          color: mUtis.backgroundColorr,
-                          child: const Text('ADD MORE'),
-                          onPressed: () {
-                            addDataToServer(1);
-                          },
-                        ),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    child: TextField(
+                      controller: Pcs,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: 'Pcs',
+                        fillColor: mUtis.backgroundColorr,
+                        hoverColor: mUtis.backgroundColorr,
+                        focusColor: mUtis.backgroundColorr,
                       ),
                     ),
-                    Expanded(
-                      child: Container(
-                        height: 50,
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        child: RaisedButton(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                          textColor: Colors.white,
-                          color: mUtis.backgroundColorr,
-                          child: const Text('VIEW ALL'),
-                          onPressed: () {
-                            addDataToServer(2);
-                          },
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        height: 50,
-                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                        child: RaisedButton(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                          textColor: Colors.white,
-                          color: mUtis.backgroundColorr,
-                          child: const Text('SAVE'),
-                          onPressed: () {
-                            addDataToServer(3);
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: TextButton(
-                    style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(mUtis.backgroundColorr),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text('BACK'),
                   ),
-                ),
-              ],
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    child: TextField(
+                      keyboardType: TextInputType.number,
+                      controller: CtwController,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: 'Ctw',
+                        fillColor: mUtis.backgroundColorr,
+                        hoverColor: mUtis.backgroundColorr,
+                        focusColor: mUtis.backgroundColorr,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: TextField(
+                      keyboardType: TextInputType.number,
+                      controller: RateController,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: 'Rate',
+                        fillColor: mUtis.backgroundColorr,
+                        hoverColor: mUtis.backgroundColorr,
+                        focusColor: mUtis.backgroundColorr,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: TextField(
+                      readOnly: true,
+                      enabled: false,
+                      keyboardType: TextInputType.number,
+                      controller: calculatePointer(Pcs.text.toString(), CtwController.text.toString()),
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: 'Pointer',
+                        fillColor: mUtis.backgroundColorr,
+                        hoverColor: mUtis.backgroundColorr,
+                        focusColor: mUtis.backgroundColorr,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: TextField(
+                      readOnly: true,
+                      enabled: false,
+                      keyboardType: TextInputType.number,
+                      controller: getTotalValue(CtwController.text.toString(), RateController.text.toString()),
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: 'Total Value',
+                        fillColor: mUtis.backgroundColorr,
+                        hoverColor: mUtis.backgroundColorr,
+                        focusColor: mUtis.backgroundColorr,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 50,
+                          padding: const EdgeInsets.fromLTRB(10, 0, 5, 0),
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                            textColor: Colors.white,
+                            color: mUtis.backgroundColorr,
+                            child: const Text('ADD MORE'),
+                            onPressed: () {
+                              addDataToServer(1);
+                            },
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 50,
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                            textColor: Colors.white,
+                            color: mUtis.backgroundColorr,
+                            child: const Text('VIEW ALL'),
+                            onPressed: () {
+                              addDataToServer(2);
+                            },
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 50,
+                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                            textColor: Colors.white,
+                            color: mUtis.backgroundColorr,
+                            child: const Text('SAVE'),
+                            onPressed: () {
+                              addDataToServer(3);
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: TextButton(
+                      style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all<Color>(mUtis.backgroundColorr),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('BACK'),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

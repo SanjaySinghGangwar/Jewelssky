@@ -1,48 +1,42 @@
-
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jewelssky/Activities/CreateProductUpload/SectionA/Category.dart';
 import 'package:jewelssky/Common/Loader.dart';
 import 'package:jewelssky/HttpService/APIService.dart';
-import 'package:jewelssky/Model/SelectCollection/SelectCollectionRequest.dart';
-import 'package:jewelssky/Model/SelectCollection/SelectCollectionResponse.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jewelssky/Model/ReadyStock/ReadyStockRequest.dart';
+import 'package:jewelssky/Model/ReadyStock/ReadyStockResponse.dart';
+import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class SelectCollection extends StatefulWidget {
-  String ptype = "";
-  String stockType = "";
-  String HUID = "";
-
-  SelectCollection(this.stockType, this.HUID, this.ptype, {Key? key}) : super(key: key);
+class ReadyStock extends StatefulWidget {
+  const ReadyStock({Key? key}) : super(key: key);
 
   @override
-  _SelectCollectionState createState() => _SelectCollectionState(ptype, HUID, stockType);
+  _ReadyStockState createState() => _ReadyStockState();
 }
 
-class _SelectCollectionState extends State<SelectCollection> {
-  String ptype = "";
-  String HUID = "";
-  String flag = "";
+class _ReadyStockState extends State<ReadyStock> {
   String stockType = "";
+  String huid = "";
   var isLoading = true;
 
   APIService apiService = APIService();
   SharedPreferences? preferences;
-  List<Data> collectionTypeList = [];
+  List<Data> productTypeList = [];
 
-  _SelectCollectionState(this.ptype, this.HUID, this.stockType);
+  _ReadyStockState();
 
   @override
   void initState() {
     super.initState();
-    print("YES" + ptype);
     initializePreference().whenComplete(() {
       setState(() {
         isLoading = false;
-        hitApi();
+        hitApi(preferences!.getString(mSharedPreference().userID)!);
       });
     });
+
+    //
   }
 
   @override
@@ -67,32 +61,29 @@ class _SelectCollectionState extends State<SelectCollection> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        SizedBox(height: 30),
                         Text(
-                          "Select Collection",
+                          "PRODUCT TYPE",
+                          textAlign: TextAlign.left,
                           style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
                         ),
                         Expanded(
                           flex: 9,
                           child: ListView.builder(
                             scrollDirection: Axis.vertical,
-                            itemCount: collectionTypeList.length,
+                            itemCount: productTypeList.length,
                             itemBuilder: (context, index) => InkWell(
-                              onTap: () => {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => Category(stockType, HUID, ptype, collectionTypeList[index].colId.toString())),
-                                ),
-                              },
+                              onTap: () => {},
                               child: Card(
                                   elevation: 10,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                                   child: Padding(
-                                padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-                                child: Text(collectionTypeList[index].collectionName!,style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-                              )),
+                                    padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+                                    child: Text(
+                                      productTypeList[index].proEname!,
+                                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                                    ),
+                                  )),
                             ),
                           ),
                         ),
@@ -100,7 +91,7 @@ class _SelectCollectionState extends State<SelectCollection> {
                           flex: 1,
                           child: TextButton(
                             style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>( mUtis.backgroundColorr),
+                              foregroundColor: MaterialStateProperty.all<Color>(mUtis.backgroundColorr),
                             ),
                             onPressed: () {
                               Navigator.pop(context);
@@ -121,29 +112,26 @@ class _SelectCollectionState extends State<SelectCollection> {
     preferences = await SharedPreferences.getInstance();
   }
 
-  void hitApi() {
+  void hitApi(String userID) {
     setState(() {
       isLoading = true;
     });
-
-    SelectCollectionRequest requestModel = SelectCollectionRequest(ptype: ptype);
-    apiService.GetCollection(requestModel)
+    ReadyStockRequest requestModel = ReadyStockRequest(ptype: "0", coll: "0", cat: "0", scat: "0", purity: "0", userId: preferences!.getString(mSharedPreference().userID)!);
+    apiService.GetReadyStock(requestModel)
         .then((value) => {
               if (value.messageId == 1)
                 {
                   setState(() {
-                    print("yess");
-                    collectionTypeList.addAll(value.data!);
+                    productTypeList.addAll(value.data!);
                     isLoading = false;
-                    print(collectionTypeList.length);
                   })
                 }
             })
         .onError((error, stackTrace) => {});
   }
-  Future<bool> _onWillPop() async {
-    //Navigator.pop(context);
-    return false;
-  }
 
+  Future<bool> _onWillPop() async {
+    Navigator.of(context).pop(true);
+    return true;
+  }
 }

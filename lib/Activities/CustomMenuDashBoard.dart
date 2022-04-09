@@ -50,6 +50,8 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
     super.initState();
     initializePreference().whenComplete(() {
       setState(() {
+        print("flag");
+        print(mSharedPreference().isLogin!=null);
         islogin = preferences!.getBool(mSharedPreference().isLogin)!;
       });
     });
@@ -80,8 +82,8 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                 children: <Widget>[
                   menuItem("HOME", Icons.home, context, widget),
                   menuItem("NEW PRODUCT UPLOAD", Icons.ac_unit_rounded, context, widget),
-                  menuItem("ITEM 2", Icons.favorite, context, widget),
-                  menuItem("ITEM 3", Icons.favorite, context, widget),
+                  menuItem("READY STOCK", Icons.favorite, context, widget),
+                  menuItem("ORDER STOCK", Icons.favorite, context, widget),
                   islogin ? menuItem("LOGOUT", Icons.person, context, widget) : menuItem("LOG IN", Icons.person, context, widget),
                 ],
               ),

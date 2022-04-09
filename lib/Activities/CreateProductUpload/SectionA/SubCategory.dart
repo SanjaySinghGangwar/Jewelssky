@@ -50,66 +50,73 @@ class _SubCategoryState extends State<SubCategory> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: isLoading
-          ? Loader()
-          : Scaffold(
-              body: Container(
-                constraints: const BoxConstraints.expand(),
-                decoration: const BoxDecoration(
-                  image: DecorationImage(image: AssetImage("assets/icon.png"), fit: BoxFit.fitWidth, opacity: 220),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 30,
-                      ),
-                       Text(
-                        "Sub Category",
-                         style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
-                      ),
-                      Expanded(
-                        flex: 9,
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemCount: collectionTypeList.length,
-                          itemBuilder: (context, index) => InkWell(
-                            onTap: () => {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => MWCollection(stockType, HUID, ptype, collection, col, cat, collectionTypeList[index].sCatId.toString())),
-                              ),
+    return WillPopScope(
+      onWillPop: () async {
+        // You can do some work here.
+        // Returning true allows the pop to happen, returning false prevents it.
+        return false;
+      },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: isLoading
+            ? Loader()
+            : Scaffold(
+                body: Container(
+                  constraints: const BoxConstraints.expand(),
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(image: AssetImage("assets/icon.png"), fit: BoxFit.fitWidth, opacity: 220),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 30,
+                        ),
+                         Text(
+                          "Sub Category",
+                           style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
+                        ),
+                        Expanded(
+                          flex: 9,
+                          child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: collectionTypeList.length,
+                            itemBuilder: (context, index) => InkWell(
+                              onTap: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => MWCollection(stockType, HUID, ptype, collection, col, cat, collectionTypeList[index].sCatId.toString())),
+                                ),
+                              },
+                              child: Card(
+                                  elevation: 10,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                                  child: Padding(
+                                padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+                                child: Text(collectionTypeList[index].subCatName!,style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
+                              )),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: TextButton(
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(mUtis.backgroundColorr),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
                             },
-                            child: Card(
-                                elevation: 10,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                                child: Padding(
-                              padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
-                              child: Text(collectionTypeList[index].subCatName!,style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),
-                            )),
+                            child: Text('BACK'),
                           ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: TextButton(
-                          style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(mUtis.backgroundColorr),
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text('BACK'),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
+      ),
     );
   }
 

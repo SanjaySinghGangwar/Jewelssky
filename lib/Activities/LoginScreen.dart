@@ -1,15 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_restart/flutter_restart.dart';
 import 'package:jewelssky/Common/Loader.dart';
 import 'package:jewelssky/HttpService/APIService.dart';
 import 'package:jewelssky/Model/Login/LoginRequest.dart';
 import 'package:jewelssky/Model/VerifyOtp/VerifyOtpRequest.dart';
+import 'package:jewelssky/Utils/AppModel.dart';
 import 'package:jewelssky/Utils/mSharedPreference.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'Home.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -161,12 +162,12 @@ class _LoginState extends State<Login> {
                                                         style: const TextStyle(fontSize: 15),
                                                       ),
                                                       const SizedBox(height: 10),
-
                                                       Padding(
                                                         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-
                                                         child: TextField(
-                                                          keyboardType: TextInputType.number,
+                                                          keyboardType: Platform.isIOS?
+                                                          TextInputType.numberWithOptions(signed: true, decimal: true)
+                                                              : TextInputType.number,
                                                           controller: otpController,
                                                           decoration: InputDecoration(
                                                             border: const OutlineInputBorder(),
@@ -188,18 +189,14 @@ class _LoginState extends State<Login> {
                                                               });
                                                               VerifyOtpRequest request = VerifyOtpRequest(user_id: nameController.text, otp: otpController.text);
                                                               apiService.verifyOTP(request).then((value) => {
-                                                                setState(() {
-                                                                  isLoading = false;
-                                                                }),
-                                                                if (value.messageId == 1) {
-                                                                  preferences?.setBool(mSharedPreference().isLogin, true),
-                                                                  preferences?.setString(mSharedPreference().userID, nameController.text),
-                                                                  preferences?.setString(mSharedPreference().mobile, mobileController.text),
-                                                                  _restartApp()
-                                                                } else {
-                                                                  mUtis.mToastError(value.message.toString())
-                                                                }
-                                                              });
+                                                                    setState(() {
+                                                                      isLoading = false;
+                                                                    }),
+                                                                    if (value.messageId == 1)
+                                                                      {preferences?.setBool(mSharedPreference().isLogin, true), preferences?.setString(mSharedPreference().userID, nameController.text), preferences?.setString(mSharedPreference().mobile, mobileController.text), Provider.of<AppModel>(context, listen: false).updateTitle("HOME"), Navigator.of(context).pop(), setState(() {})}
+                                                                    else
+                                                                      {mUtis.mToastError(value.message.toString())}
+                                                                  });
                                                             },
                                                             child: const Padding(
                                                               padding: EdgeInsets.all(15.0),
@@ -218,7 +215,9 @@ class _LoginState extends State<Login> {
                                                     ],
                                                   ),
                                                 ))
-                                      },
+                                      }
+                                    else
+                                      {mUtis.mToast(value.message.toString())},
                                     setState(() {
                                       isLoading = false;
                                     }),
@@ -244,11 +243,6 @@ class _LoginState extends State<Login> {
               ),
             ),
           );
-  }
-
-  void _restartApp() async {
-    mUtis.mToastSuccess("Please wait");
-    FlutterRestart.restartApp();
   }
 
   Future<void> initializePreference() async {

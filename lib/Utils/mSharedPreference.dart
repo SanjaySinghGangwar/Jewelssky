@@ -4,4 +4,5 @@ class mSharedPreference {
   final String userID="userID";
   final String mobile="mobile";
   final String design="design";
+  final String jobNumber="jobNumber";
 }

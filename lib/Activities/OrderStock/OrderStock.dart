@@ -24,9 +24,13 @@ class _OrderStockState extends State<OrderStock> {
   String huid = "";
   var isLoading = true;
 
+  List<Data> dummyListData =[];
+  List<Data> duplicateItems =[];
+
   APIService apiService = APIService();
   SharedPreferences? preferences;
   List<Data> productTypeList = [];
+  TextEditingController editingController = TextEditingController();
 
   _OrderStockState();
 
@@ -56,6 +60,7 @@ class _OrderStockState extends State<OrderStock> {
         home: isLoading
             ? Loader()
             : Scaffold(
+          resizeToAvoidBottomInset: false,
                 body: Container(
                   constraints: const BoxConstraints.expand(),
                   decoration: const BoxDecoration(
@@ -66,6 +71,21 @@ class _OrderStockState extends State<OrderStock> {
                     child: Column(
                       children: [
                         SizedBox(height: 0),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextField(
+                            onChanged: (value) {
+                              filterSearchResults(value);
+                            },
+                            controller: editingController,
+                            decoration: const InputDecoration(
+                                labelText: "Search Via Job Number",
+                                hintText: "Search Via Job Number",
+                                prefixIcon: Icon(Icons.search),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(25.0)))),
+                          ),
+                        ),
                         Expanded(
                           flex: 9,
                           child: ListView.builder(
@@ -306,5 +326,28 @@ class _OrderStockState extends State<OrderStock> {
   Future<bool> _onWillPop() async {
     Navigator.of(context).pop(true);
     return true;
+  }
+  void filterSearchResults(String query) {
+    if(query.isNotEmpty) {
+      print(query);
+      for (var i in duplicateItems) {
+        if(i.jobNo.toString().contains(query)) {
+          dummyListData.clear();
+          print(i.jobNo.toString());
+          dummyListData.add(i);
+        }
+      }
+      setState(() {
+        productTypeList.clear();
+        productTypeList.addAll(dummyListData);
+      });
+      return;
+    } else {
+      setState(() {
+        productTypeList.clear();
+        productTypeList.addAll(duplicateItems);
+      });
+    }
+
   }
 }

@@ -20,6 +20,8 @@ class ReadyStock extends StatefulWidget {
 }
 
 class _ReadyStockState extends State<ReadyStock> {
+  TextEditingController editingController = TextEditingController();
+
   String stockType = "";
   String huid = "";
   var isLoading = true;
@@ -27,6 +29,8 @@ class _ReadyStockState extends State<ReadyStock> {
   APIService apiService = APIService();
   SharedPreferences? preferences;
   List<Data> productTypeList = [];
+  List<Data> dummyListData =[];
+  List<Data> duplicateItems =[];
 
   _ReadyStockState();
 
@@ -56,6 +60,7 @@ class _ReadyStockState extends State<ReadyStock> {
         home: isLoading
             ? Loader()
             :  Scaffold(
+          resizeToAvoidBottomInset: false,
           body: Container(
             constraints: const BoxConstraints.expand(),
             decoration: const BoxDecoration(
@@ -66,6 +71,21 @@ class _ReadyStockState extends State<ReadyStock> {
               child: Column(
                 children: [
                   SizedBox(height: 0),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      onChanged: (value) {
+                        filterSearchResults(value);
+                      },
+                      controller: editingController,
+                      decoration: const InputDecoration(
+                          labelText: "Search Via Job Number",
+                          hintText: "Search Via Job Number",
+                          prefixIcon: Icon(Icons.search),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(25.0)))),
+                    ),
+                  ),
                   Expanded(
                     flex: 9,
                     child: ListView.builder(
@@ -286,6 +306,8 @@ class _ReadyStockState extends State<ReadyStock> {
   }
 
   void hitApi(String userID) {
+    duplicateItems.clear();
+    productTypeList.clear();
     setState(() {
       isLoading = true;
     });
@@ -295,6 +317,7 @@ class _ReadyStockState extends State<ReadyStock> {
               if (value.messageId == 1)
                 {
                   setState(() {
+                    duplicateItems.addAll(value.data!);
                     productTypeList.addAll(value.data!);
                     isLoading = false;
                   })
@@ -306,5 +329,28 @@ class _ReadyStockState extends State<ReadyStock> {
   Future<bool> _onWillPop() async {
     Navigator.of(context).pop(true);
     return true;
+  }
+  void filterSearchResults(String query) {
+    if(query.isNotEmpty) {
+      print(query);
+      for (var i in duplicateItems) {
+        if(i.jobNo.toString().contains(query)) {
+          dummyListData.clear();
+          print(i.jobNo.toString());
+          dummyListData.add(i);
+        }
+      }
+      setState(() {
+        productTypeList.clear();
+        productTypeList.addAll(dummyListData);
+      });
+      return;
+    } else {
+      setState(() {
+        productTypeList.clear();
+        productTypeList.addAll(duplicateItems);
+      });
+    }
+
   }
 }

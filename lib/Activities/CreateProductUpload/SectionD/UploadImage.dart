@@ -6,6 +6,7 @@ import 'package:fullscreen/fullscreen.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:jewelssky/Common/Loader.dart';
+import 'package:jewelssky/Common/mFunction.dart';
 import 'package:jewelssky/HttpService/APIService.dart';
 import 'package:jewelssky/Utils/AppModel.dart';
 import 'package:jewelssky/Utils/mSharedPreference.dart';
@@ -120,7 +121,7 @@ class _UpLoadImageState extends State<UpLoadImage> {
                           padding: const EdgeInsets.all(10),
                           child: Text(
                             "Upload Image",
-                            textAlign: TextAlign.left,
+                            textAlign: TextAlign.center,
                             style: TextStyle(color: mUtis.backgroundColorr, fontWeight: FontWeight.w500, fontSize: 40),
                           ),
                         ),
@@ -169,7 +170,7 @@ class _UpLoadImageState extends State<UpLoadImage> {
                                   //_getFromGallery();
                                 },
                                 child: const Padding(
-                                  padding: EdgeInsets.only(left: 40.0, right: 40.0),
+                                  padding: EdgeInsets.all(100),
                                   child: Image(
                                     image: AssetImage('assets/image.png'),
                                     fit: BoxFit.fill,
@@ -183,12 +184,13 @@ class _UpLoadImageState extends State<UpLoadImage> {
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                                 color: mUtis.backgroundColorr,
                                 onPressed: () {
+                                  if(imageFile != null){
                                   setState(() {
                                     isLoading = true;
                                   });
                                   apiService.uploadImage(jobNo, preferences!.getString(mSharedPreference().userID).toString(), imageFile!.uri).then((value) => {
                                         if (value.contains("Success"))
-                                          {Provider.of<AppModel>(context, listen: false).updateTitle("HOME")}
+                                          {mFunction.restart()}
                                         else
                                           {
                                             setState(() {
@@ -196,7 +198,9 @@ class _UpLoadImageState extends State<UpLoadImage> {
                                             }),
                                             mUtis.mToast('Enter User ID')
                                           }
-                                      });
+                                      });}else{
+                                    mUtis.mToast('Please click image');
+                                  }
                                 },
                                 child: Text(
                                   "Upload & Save",

@@ -57,6 +57,7 @@ dev_dependencies:
   http: ^0.13.4
   flutter_native_splash: ^2.0.5
   dio: ^4.0.4
+  flutter_app_restart: ^1.0.0
 
 
 flutter_native_splash:

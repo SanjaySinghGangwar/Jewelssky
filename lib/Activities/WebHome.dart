@@ -84,7 +84,7 @@ class _WebHomeState extends State<WebHome> {
   }
 
   Widget condition(String flag, BuildContext context) {
-    Provider.of<AppModel>(context, listen: false).loadingToggle(false);
+    //Provider.of<AppModel>(context, listen: false).loadingToggle(false);
     Widget widget;
     switch (flag) {
       case "HOME":

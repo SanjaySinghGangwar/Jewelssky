@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jewelssky/Activities/CreateProductUpload/SectionC/Calculate.dart';
+import 'package:jewelssky/Activities/CreateProductUpload/SectionC/CalculateTwo.dart';
 import 'package:jewelssky/Common/Loader.dart';
 import 'package:jewelssky/HttpService/APIService.dart';
 import 'package:jewelssky/Model/ColorA/ColorARequest.dart';
@@ -130,7 +131,7 @@ class _SettingAState extends State<SettingA> {
                         onTap: () => {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Calculate(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId,collectionTypeList[index].settId.toString(),collectionTypeList[index].settingName.toString(),materialSize,materialSizeID,materialColorID,materialColor,shape,quality,qualityID,materialName,dgno,geniid)),
+                            MaterialPageRoute(builder: (context) => ClaculateTwo(stockType, HUID, ptype, collection, col, cat, mwCollection, scat, cultNm, cultId, materialID, shapeId,collectionTypeList[index].settId.toString(),collectionTypeList[index].settingName.toString(),materialSize,materialSizeID,materialColorID,materialColor,shape,quality,qualityID,materialName,dgno,geniid)),
                           ),
                         },
                         child: Card(

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jewelssky/Common/Loader.dart';
+import 'package:jewelssky/Common/mFunction.dart';
 import 'package:jewelssky/HttpService/APIService.dart';
 import 'package:jewelssky/Model/Login/LoginRequest.dart';
 import 'package:jewelssky/Model/VerifyOtp/VerifyOtpRequest.dart';
@@ -159,7 +160,7 @@ class _LoginState extends State<Login> {
                                                         width: 150,
                                                       ),
                                                       Text(
-                                                        "You will be receiving four digit code on " + mobileController.text,
+                                                        "You will be receiving code on " + mobileController.text,
                                                         style: const TextStyle(fontSize: 15),
                                                       ),
                                                       const SizedBox(height: 10),
@@ -194,7 +195,9 @@ class _LoginState extends State<Login> {
                                                                       isLoading = false;
                                                                     }),
                                                                     if (value.messageId == 1)
-                                                                      {preferences?.setBool(mSharedPreference().isLogin, true), preferences?.setString(mSharedPreference().userID, nameController.text), preferences?.setString(mSharedPreference().mobile, mobileController.text), Provider.of<AppModel>(context, listen: false).updateTitle("HOME"), Navigator.of(context).pop(), setState(() {})}
+                                                                      {
+                                                                        preferences?.setBool(mSharedPreference().isLogin, true), preferences?.setString(mSharedPreference().userID, nameController.text), preferences?.setString(mSharedPreference().mobile, mobileController.text),mFunction.restart()
+                                                                      }
                                                                     else
                                                                       {mUtis.mToastError(value.message.toString())}
                                                                   });

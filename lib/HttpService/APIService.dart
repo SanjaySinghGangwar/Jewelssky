@@ -8,6 +8,8 @@ import 'package:jewelssky/Model/Category/CategortRequest.dart';
 import 'package:jewelssky/Model/Category/CategoryResponse.dart';
 import 'package:jewelssky/Model/ColorA/ColorARequest.dart';
 import 'package:jewelssky/Model/ColorA/ColorAResponse.dart';
+import 'package:jewelssky/Model/GetProdductRecord/GetProdductRecordReqest.dart';
+import 'package:jewelssky/Model/GetProdductRecord/GetProdductRecordResponse.dart';
 import 'package:jewelssky/Model/LabCertification/LabCertificationResponse.dart';
 import 'package:jewelssky/Model/Login/LoginRequest.dart';
 import 'package:jewelssky/Model/Login/LoginResonse.dart';
@@ -42,10 +44,12 @@ import 'package:jewelssky/Model/SubCategory/SubCategoryRequest.dart';
 import 'package:jewelssky/Model/SubCategory/SubCategoryResponse.dart';
 import 'package:jewelssky/Model/VerifyOtp/VerifyOtpRequest.dart';
 import 'package:jewelssky/Model/VerifyOtp/VerifyOtpResponse.dart';
+import 'package:jewelssky/Model/getProductListForEdit/getProductListForEditRequest.dart';
 import 'package:jewelssky/Model/getVendorUserCollection/getVendorUserCollectionResponse.dart';
 import 'package:jewelssky/Model/jobWiseMaterialDetails/jobWiseMaterialDetailsRequest.dart';
 import 'package:jewelssky/Model/jobWiseMaterialDetails/jobWiseMaterialDetailsResponse.dart';
 import 'package:jewelssky/Utils/mUtils.dart';
+import 'package:jewelssky/Model/getProductListForEdit/getProductListForEditResponse.dart';
 
 class APIService {
   Future<LoginResonse> login(LoginRequest requestModel) async {
@@ -373,6 +377,30 @@ class APIService {
     final response = await http.post(Uri.parse(mUtis().BaseURL + 'Get_All_Order_Stock'), body: requestModel.toJson());
     if (response.statusCode == 200 || response.statusCode == 400) {
       return OrderStockResponse.fromJson(
+        json.decode(response.body),
+      );
+    } else {
+      throw Exception('Failed to load data!');
+    }
+  }
+  Future<getProductListForEditResponse> getProductListForEdit(getProductListForEditRequest requestModel) async {
+    print("Request :: ");
+    print(requestModel.toJson());
+    final response = await http.post(Uri.parse(mUtis().BaseURL + 'Get_Product_List_For_Edit'), body: requestModel.toJson());
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      return getProductListForEditResponse.fromJson(
+        json.decode(response.body),
+      );
+    } else {
+      throw Exception('Failed to load data!');
+    }
+  }
+  Future<GetProdductRecordResponse> getProductDataForEdit(GetProdductRecordReqest requestModel) async {
+    print("Request :: ");
+    print(requestModel.toJson());
+    final response = await http.post(Uri.parse(mUtis().BaseURL + 'Get_Product_Record'), body: requestModel.toJson());
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      return GetProdductRecordResponse.fromJson(
         json.decode(response.body),
       );
     } else {

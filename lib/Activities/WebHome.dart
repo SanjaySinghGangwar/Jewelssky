@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fullscreen/fullscreen.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
 import 'package:jewelssky/Activities/CreateProductUpload/SectionA/createProductUpload.dart';
+import 'package:jewelssky/Activities/EditProducts/EditProductsList.dart';
 import 'package:jewelssky/Activities/LoginScreen.dart';
 import 'package:jewelssky/Activities/OrderStock/OrderStock.dart';
 import 'package:jewelssky/Activities/ReadyStock/ReadyStock.dart';
@@ -35,7 +36,8 @@ class _WebHomeState extends State<WebHome> {
   TextEditingController confirmPasswordController = TextEditingController();
 
   @override
-  void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
+  void initState() {
+    FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     super.initState();
     FullScreen.exitFullScreen();
     initializePreference().whenComplete(() {
@@ -66,7 +68,7 @@ class _WebHomeState extends State<WebHome> {
                   onPressed: () {
                     SimpleHiddenDrawerController.of(context).toggle();
                   }),
-              actions: <Widget>[
+              actions: const <Widget>[
                 /*IconButton(
                   icon: Icon(
                     Icons.shopping_cart,
@@ -84,7 +86,6 @@ class _WebHomeState extends State<WebHome> {
   }
 
   Widget condition(String flag, BuildContext context) {
-    //Provider.of<AppModel>(context, listen: false).loadingToggle(false);
     Widget widget;
     switch (flag) {
       case "HOME":
@@ -94,7 +95,7 @@ class _WebHomeState extends State<WebHome> {
         widget = isLogin ? const NewCollectionName() : const Login();
         break;
       case "NEW PRODUCT UPLOAD":
-        widget = isLogin ? const CreateProductUpload() : const Login();
+        widget = isLogin ?  CreateProductUpload("") : const Login();
         break;
       case "LOGOUT":
         preferences?.clear();
@@ -106,8 +107,12 @@ class _WebHomeState extends State<WebHome> {
         break;
       case "READY STOCK":
         widget = isLogin ? const ReadyStock() : const Login();
-        break;case "ORDER STOCK":
+        break;
+      case "ORDER STOCK":
         widget = isLogin ? const OrderStock() : const Login();
+        break;
+      case "EDIT PRODUCTS":
+        widget = isLogin ? const EditProductsList() : const Login();
         break;
       default:
         widget = const Home();

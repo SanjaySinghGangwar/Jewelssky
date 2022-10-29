@@ -133,6 +133,33 @@ class _HomeState extends State<Home> {
                           ),
                         ],
                       ),
+                      InkWell(
+                        onTap: () {
+                          Provider.of<AppModel>(context, listen: false).updateTitle("EDIT PRODUCTS");
+                          setState(() {
+
+                          });
+                        },
+                        child: Card(
+                            elevation: 20,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 100,
+                                    height: 100,
+                                    child: Image.asset(
+                                      "assets/edit_products.png",
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  const Text('Edit Product'),
+                                ],
+                              ),
+                            )),
+                      ),
                     ],
                   ),
                 ),

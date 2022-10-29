@@ -85,6 +85,7 @@ class _MenuState extends State<Menu> with TickerProviderStateMixin {
                   menuItem("NEW PRODUCT UPLOAD", Icons.ac_unit_rounded, context, widget),
                   menuItem("READY STOCK", Icons.timeline_rounded, context, widget),
                   menuItem("ORDER STOCK", Icons.stream, context, widget),
+                  menuItem("EDIT PRODUCTS", Icons.edit, context, widget),
                   islogin ? menuItem("LOGOUT", Icons.person, context, widget) : menuItem("LOG IN", Icons.person, context, widget),
                 ],
               ),

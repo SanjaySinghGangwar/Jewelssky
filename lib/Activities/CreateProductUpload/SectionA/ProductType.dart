@@ -13,11 +13,12 @@ import 'package:fullscreen/fullscreen.dart';
 class productType extends StatefulWidget {
   String stockType = "";
   String HUID = "";
+  var productEditData;
 
-  productType(this.stockType, this.HUID, {Key? key}) : super(key: key);
+  productType(this.stockType, this.HUID, this.productEditData, {Key? key}) : super(key: key);
 
   @override
-  _productTypeState createState() => _productTypeState(stockType, HUID);
+  _productTypeState createState() => _productTypeState(stockType, HUID,productEditData);
 }
 
 class _productTypeState extends State<productType> {
@@ -29,7 +30,9 @@ class _productTypeState extends State<productType> {
   SharedPreferences? preferences;
   List<Data> productTypeList = [];
 
-  _productTypeState(this.stockType, this.huid);
+  var productEditData;
+
+  _productTypeState(this.stockType, this.huid, this.productEditData);
 
   @override
   void initState() { FullScreen.enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
@@ -40,6 +43,11 @@ class _productTypeState extends State<productType> {
         hitApi(preferences!.getString(mSharedPreference().userID)!);
       });
     });
+
+    if(productEditData!=null){
+      print("EDIT SCREEN");
+      print(productEditData);
+    }
 
     //
   }
